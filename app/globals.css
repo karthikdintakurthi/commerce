@@ -1,35 +1,59 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom utility classes for missing Tailwind classes */
+@layer utilities {
+  .hover\:opacity-60:hover {
+    opacity: 0.6;
+  }
+  .hover\:opacity-90:hover {
+    opacity: 0.9;
+  }
+  
+  /* Fix primary color classes to use hsl wrapper */
+  .bg-primary {
+    background-color: hsl(var(--primary));
+  }
+  .text-primary-foreground {
+    color: hsl(var(--primary-foreground));
+  }
+  .hover\:bg-primary:hover {
+    background-color: hsl(var(--primary));
+  }
+}
+
 
 @layer base {
   :root {
-    /* Light theme - Core colors */
-    --background: 42 25% 96%;
-    --foreground: 240 11% 7%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 11% 7%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 11% 7%;
-    --primary: 174 73% 23%;
+    /* Light theme - Core colors (Vanitha Fashion Jewelry branding) */
+    --background: hsl(0 0% 100%);
+    --foreground: hsl(0 0% 9%);
+    --card: hsl(0 0% 100%);
+    --card-foreground: hsl(0 0% 9%);
+    --popover: hsl(0 0% 100%);
+    --popover-foreground: hsl(0 0% 9%);
+    --primary: 45 100% 51%; /* Gold primary */
     --primary-foreground: 0 0% 100%;
-    --secondary: 120 14% 42%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 45 40% 73%;
-    --muted-foreground: 120 14% 42%;
-    --accent: 45 64% 46%;
-    --accent-foreground: 240 11% 7%;
-    --destructive: 344 63% 35%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 45 40% 73%;
-    --input: 45 40% 73%;
-    --ring: 45 64% 46%;
+    --secondary: hsl(45 20% 85%); /* Light gold secondary */
+    --secondary-foreground: hsl(0 0% 9%);
+    --muted: hsl(45 10% 90%);
+    --muted-foreground: hsl(0 0% 45%);
+    --accent: hsl(45 100% 51%); /* Gold accent */
+    --accent-foreground: hsl(0 0% 100%);
+    --destructive: hsl(0 84% 60%);
+    --destructive-foreground: hsl(0 0% 100%);
+    --border: hsl(45 20% 85%);
+    --input: hsl(45 20% 85%);
+    --ring: hsl(45 100% 51%);
     --radius: 0.5rem;
 
-    /* Jewelry semantic colors */
-    --chip-emerald: 174 73% 23%;
-    --chip-ruby: 344 63% 35%;
-    --chip-gold: 45 64% 46%;
-    --chip-sage: 120 14% 42%;
-    --chip-sand: 45 40% 73%;
+    /* Jewelry semantic colors (Vanitha Fashion Jewelry theme) */
+    --chip-emerald: hsl(120 30% 25%); /* Darker emerald */
+    --chip-ruby: hsl(0 60% 40%); /* Rich ruby red */
+    --chip-gold: hsl(45 100% 51%); /* Bright gold */
+    --chip-sage: hsl(120 20% 35%); /* Muted sage green */
+    --chip-sand: hsl(45 30% 70%); /* Warm sand beige */
 
     /* Typography scale */
     --font-size-xs: 0.75rem;
@@ -148,32 +172,32 @@
 
   .dark {
     /* Dark theme - Core colors */
-    --background: 240 11% 7%;
-    --foreground: 42 25% 96%;
-    --card: 240 11% 10%;
-    --card-foreground: 42 25% 96%;
-    --popover: 240 11% 10%;
-    --popover-foreground: 42 25% 96%;
-    --primary: 174 73% 23%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 120 14% 42%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 240 11% 16%;
-    --muted-foreground: 120 14% 42%;
-    --accent: 45 64% 46%;
-    --accent-foreground: 240 11% 7%;
-    --destructive: 344 63% 35%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 240 11% 16%;
-    --input: 240 11% 16%;
-    --ring: 45 64% 46%;
+    --background: hsl(240 11% 7%);
+    --foreground: hsl(42 25% 96%);
+    --card: hsl(240 11% 10%);
+    --card-foreground: hsl(42 25% 96%);
+    --popover: hsl(240 11% 10%);
+    --popover-foreground: hsl(42 25% 96%);
+    --primary: hsl(174 73% 23%);
+    --primary-foreground: hsl(0 0% 100%);
+    --secondary: hsl(120 14% 42%);
+    --secondary-foreground: hsl(0 0% 100%);
+    --muted: hsl(240 11% 16%);
+    --muted-foreground: hsl(120 14% 42%);
+    --accent: hsl(45 64% 46%);
+    --accent-foreground: hsl(240 11% 7%);
+    --destructive: hsl(344 63% 35%);
+    --destructive-foreground: hsl(0 0% 100%);
+    --border: hsl(240 11% 16%);
+    --input: hsl(240 11% 16%);
+    --ring: hsl(45 64% 46%);
 
     /* Jewelry semantic colors remain the same */
-    --chip-emerald: 174 73% 23%;
-    --chip-ruby: 344 63% 35%;
-    --chip-gold: 45 64% 46%;
-    --chip-sage: 120 14% 42%;
-    --chip-sand: 45 40% 73%;
+    --chip-emerald: hsl(174 73% 23%);
+    --chip-ruby: hsl(344 63% 35%);
+    --chip-gold: hsl(45 64% 46%);
+    --chip-sage: hsl(120 14% 42%);
+    --chip-sand: hsl(45 40% 73%);
   }
 
   *,
@@ -250,7 +274,7 @@ input,
 button,
 [role="button"],
 [role="link"] {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
 }
 
 /* Subtle focus ring for interactive elements */
@@ -260,7 +284,7 @@ a:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  @apply focus-visible:ring-[var(--accent)]/60 focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2;
 }
 
 /* Reduced motion preferences */
@@ -278,25 +302,25 @@ textarea:focus-visible {
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   :root {
-    --border: 0 0% 0%;
-    --ring: 0 0% 0%;
+    --border: hsl(0 0% 0%);
+    --ring: hsl(0 0% 0%);
     
     /* High contrast jewelry colors */
-    --chip-emerald-text-light: 0 0% 0%;
-    --chip-emerald-text-dark: 0 0% 100%;
-    --chip-ruby-text-light: 0 0% 100%;
-    --chip-ruby-text-dark: 0 0% 100%;
-    --chip-gold-text-light: 0 0% 0%;
-    --chip-gold-text-dark: 0 0% 0%;
-    --chip-sage-text-light: 0 0% 100%;
-    --chip-sage-text-dark: 0 0% 100%;
-    --chip-sand-text-light: 0 0% 0%;
-    --chip-sand-text-dark: 0 0% 0%;
+    --chip-emerald-text-light: hsl(0 0% 0%);
+    --chip-emerald-text-dark: hsl(0 0% 100%);
+    --chip-ruby-text-light: hsl(0 0% 100%);
+    --chip-ruby-text-dark: hsl(0 0% 100%);
+    --chip-gold-text-light: hsl(0 0% 0%);
+    --chip-gold-text-dark: hsl(0 0% 0%);
+    --chip-sage-text-light: hsl(0 0% 100%);
+    --chip-sage-text-dark: hsl(0 0% 100%);
+    --chip-sand-text-light: hsl(0 0% 0%);
+    --chip-sand-text-dark: hsl(0 0% 0%);
   }
   
   .dark {
-    --border: 0 0% 100%;
-    --ring: 0 0% 100%;
+    --border: hsl(0 0% 100%);
+    --ring: hsl(0 0% 100%);
   }
   
   /* High contrast text on jewelry backgrounds */

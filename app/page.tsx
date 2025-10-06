@@ -29,7 +29,7 @@ function DefaultWelcomePage() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a 
             href="/search" 
-            className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-lg font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            className="bg-primary hover:bg-primary-700 text-primary-foreground px-8 py-3 rounded-lg font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           >
             Browse Collection
           </a>

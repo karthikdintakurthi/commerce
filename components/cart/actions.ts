@@ -99,13 +99,17 @@ export async function updateItemQuantity(
 }
 
 export async function redirectToCheckout() {
-  try {
-    let cart = await getCart();
-    redirect(cart!.checkoutUrl);
-  } catch (e) {
-    console.error('Failed to redirect to checkout:', e);
-    throw new Error('Unable to proceed to checkout');
+  let cart = await getCart();
+  
+  if (!cart) {
+    throw new Error('Cart not found');
   }
+  
+  if (!cart.checkoutUrl) {
+    throw new Error('Checkout URL not available');
+  }
+  
+  redirect(cart.checkoutUrl);
 }
 
 export async function createCartAndSetCookie() {

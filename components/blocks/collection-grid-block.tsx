@@ -39,7 +39,7 @@ export function CollectionGridBlock({ block }: CollectionGridBlockProps) {
             <Link
               key={index}
               href={collection.url}
-              className="group block bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              className="group block bg-background rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
             >
               <div className="relative aspect-square overflow-hidden rounded-t-lg">
                 {collection.image ? (
@@ -87,7 +87,7 @@ export function CollectionGridBlock({ block }: CollectionGridBlockProps) {
         <div className="text-center">
           <Link
             href={block.buttonUrl}
-            className="inline-flex items-center justify-center px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center justify-center px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary-700 transition-colors"
           >
             {block.buttonText}
           </Link>

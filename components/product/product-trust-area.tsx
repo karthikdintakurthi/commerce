@@ -35,19 +35,19 @@ export function ProductTrustArea() {
               Secure Payment
             </h3>
             <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center space-x-2 p-3 bg-white rounded-lg border">
+              <div className="flex items-center space-x-2 p-3 bg-background rounded-lg border">
                 <CreditCard className="h-5 w-5 text-blue-600" />
                 <span className="text-sm font-medium">Visa</span>
               </div>
-              <div className="flex items-center space-x-2 p-3 bg-white rounded-lg border">
+              <div className="flex items-center space-x-2 p-3 bg-background rounded-lg border">
                 <CreditCard className="h-5 w-5 text-blue-600" />
                 <span className="text-sm font-medium">Mastercard</span>
               </div>
-              <div className="flex items-center space-x-2 p-3 bg-white rounded-lg border">
+              <div className="flex items-center space-x-2 p-3 bg-background rounded-lg border">
                 <CreditCard className="h-5 w-5 text-blue-600" />
                 <span className="text-sm font-medium">American Express</span>
               </div>
-              <div className="flex items-center space-x-2 p-3 bg-white rounded-lg border">
+              <div className="flex items-center space-x-2 p-3 bg-background rounded-lg border">
                 <CreditCard className="h-5 w-5 text-blue-600" />
                 <span className="text-sm font-medium">PayPal</span>
               </div>
@@ -67,7 +67,7 @@ export function ProductTrustArea() {
                 <Shield className="h-3 w-3 mr-1" />
                 SSL Secure
               </Badge>
-              <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+              <Badge variant="secondary" className="bg-primary/10 text-primary">
                 <CheckCircle className="h-3 w-3 mr-1" />
                 Authentic Guarantee
               </Badge>

@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { NavbarThemeToggle } from '@/components/layout/navbar/navbar-theme-toggle';
+import { VanithaLogo } from '@/components/icons/vanitha-logo';
 import { 
   Menu, 
   Search, 
@@ -111,11 +111,8 @@ export function MobileSheet({ className }: MobileSheetProps) {
       <SheetContent side="left" className="w-80 sm:w-96">
         <SheetHeader className="space-y-4">
           <SheetTitle className="text-left">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-chip-gold rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-sm">V</span>
-              </div>
-              <span className="font-display text-xl">Vanitha</span>
+            <Link href="/" className="flex items-center">
+              <VanithaLogo variant="full" size="md" />
             </Link>
           </SheetTitle>
           
@@ -125,7 +122,7 @@ export function MobileSheet({ className }: MobileSheetProps) {
             <input
               type="search"
               placeholder="Search jewelry..."
-              className="w-full pl-10 pr-4 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-chip-gold focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
         </SheetHeader>
@@ -212,13 +209,6 @@ export function MobileSheet({ className }: MobileSheetProps) {
             </div>
           </div>
 
-          {/* Theme Toggle */}
-          <div className="pt-4 border-t border-border">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">Theme</span>
-              <NavbarThemeToggle variant="mobile" />
-            </div>
-          </div>
         </div>
       </SheetContent>
     </Sheet>

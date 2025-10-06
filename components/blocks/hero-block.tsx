@@ -25,9 +25,9 @@ export function HeroBlock({ block }: HeroBlockProps) {
   }
 
   const buttonClasses = {
-    primary: 'bg-blue-600 hover:bg-blue-700 text-white',
-    secondary: 'bg-gray-600 hover:bg-gray-700 text-white',
-    outline: 'border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white',
+    primary: 'bg-primary hover:bg-primary-700 text-primary-foreground',
+    secondary: 'bg-secondary hover:bg-secondary/80 text-secondary-foreground',
+    outline: 'border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground',
   }
 
   return (

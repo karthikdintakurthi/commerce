@@ -13,11 +13,11 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({ 
   children, 
-  defaultTheme = 'system',
+  defaultTheme = 'light',
   storageKey = 'vanitha-theme',
   attribute = 'class',
-  enableSystem = true,
-  disableTransitionOnChange = false,
+  enableSystem = false,
+  disableTransitionOnChange = true,
 }: ThemeProviderProps) {
   return (
     <CustomThemeProvider

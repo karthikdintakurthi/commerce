@@ -69,7 +69,7 @@ export function CollectionProducts({ collectionHandle, searchParams, initialProd
 
       <div className="space-y-6">
         {/* Sticky Filter Bar */}
-        <div className="sticky top-20 z-40 bg-white border-b border-gray-200 py-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="sticky top-20 z-40 bg-background border-b border-border py-4 -mx-4 px-4 sm:mx-0 sm:px-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             {/* Mobile Filter Button */}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { createContext, useContext, useMemo, useOptimistic } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 type ProductState = {
   [key: string]: string;
@@ -21,30 +21,33 @@ export function ProductProvider({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams();
 
   const getInitialState = () => {
+    // Start with empty state to avoid hydration mismatches
+    // URL params will be applied on client side
+    return {};
+  };
+
+  const [state, setState] = useState<ProductState>(getInitialState());
+
+  // Apply URL parameters on client side to avoid hydration mismatches
+  useEffect(() => {
     const params: ProductState = {};
     for (const [key, value] of searchParams.entries()) {
       params[key] = value;
     }
-    return params;
-  };
-
-  const [state, setOptimisticState] = useOptimistic(
-    getInitialState(),
-    (prevState: ProductState, update: ProductState) => ({
-      ...prevState,
-      ...update
-    })
-  );
+    if (Object.keys(params).length > 0) {
+      setState(params);
+    }
+  }, [searchParams]);
 
   const updateOption = (name: string, value: string) => {
     const newState = { [name]: value };
-    setOptimisticState(newState);
+    setState(prevState => ({ ...prevState, ...newState }));
     return { ...state, ...newState };
   };
 
   const updateImage = (index: string) => {
     const newState = { image: index };
-    setOptimisticState(newState);
+    setState(prevState => ({ ...prevState, ...newState }));
     return { ...state, ...newState };
   };
 

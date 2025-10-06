@@ -3,7 +3,7 @@
 import CartModal from '@/components/cart/modal';
 import { AnnouncementBar } from '@/components/layout/announcement-bar';
 import { MobileSheet } from '@/components/layout/mobile-sheet';
-import { NavbarThemeToggle } from '@/components/layout/navbar/navbar-theme-toggle';
+import { VanithaLogo } from '@/components/icons/vanitha-logo';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -47,15 +47,11 @@ export function Header({ className }: HeaderProps) {
           <div className="flex-shrink-0">
             <Link 
               href="/" 
-              className="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-chip-gold focus:ring-offset-2 rounded-md"
-              aria-label="Vanitha Home"
+              className="flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md"
+              aria-label="Vanitha Fashion Jewelry Home"
             >
-              <div className="w-8 h-8 bg-gradient-to-br from-chip-gold to-chip-sage rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-sm">V</span>
-              </div>
-              <span className="font-display text-xl font-semibold hidden sm:block">
-                Vanitha
-              </span>
+              <VanithaLogo variant="full" size="md" className="hidden sm:flex" />
+              <VanithaLogo variant="icon" size="md" className="sm:hidden" />
             </Link>
           </div>
 
@@ -65,7 +61,7 @@ export function Header({ className }: HeaderProps) {
               <div key={category.name} className="relative group">
                 <Link
                   href={category.href}
-                  className="flex items-center space-x-1 py-2 text-sm font-medium text-foreground hover:text-chip-gold transition-colors focus:outline-none focus:ring-2 focus:ring-chip-gold focus:ring-offset-2 rounded-sm"
+                  className="flex items-center space-x-1 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm"
                 >
                   <span>{category.name}</span>
                   <ChevronDown className="h-3 w-3 opacity-50 group-hover:opacity-100 transition-opacity" />
@@ -120,8 +116,6 @@ export function Header({ className }: HeaderProps) {
               <User className="h-4 w-4" />
             </Button>
 
-            {/* Theme Toggle */}
-            <NavbarThemeToggle variant="desktop" />
           </div>
         </div>
 
@@ -133,7 +127,7 @@ export function Header({ className }: HeaderProps) {
               <input
                 type="search"
                 placeholder="Search for jewelry, collections, or designers..."
-                className="w-full pl-10 pr-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-chip-gold focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                 autoFocus
                 onBlur={() => setIsSearchOpen(false)}
               />

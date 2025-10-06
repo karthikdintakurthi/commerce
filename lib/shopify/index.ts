@@ -127,11 +127,21 @@ export async function shopifyFetch<T>({
 }
 
 const removeEdgesAndNodes = <T>(array: Connection<T>): T[] => {
-  return array.edges.map((edge) => edge?.node);
+  if (!array || !array.edges) {
+    return [];
+  }
+  return array.edges.map((edge) => edge?.node).filter(Boolean);
 };
 
 const reshapeCart = (cart: ShopifyCart): Cart => {
-  if (!cart.cost?.totalTaxAmount) {
+  // Handle case where cart.cost might be null
+  if (!cart.cost) {
+    cart.cost = {
+      subtotalAmount: { amount: '0.0', currencyCode: 'USD' },
+      totalAmount: { amount: '0.0', currencyCode: 'USD' },
+      totalTaxAmount: { amount: '0.0', currencyCode: 'USD' }
+    };
+  } else if (!cart.cost.totalTaxAmount) {
     cart.cost.totalTaxAmount = {
       amount: '0.0',
       currencyCode: cart.cost.totalAmount.currencyCode
@@ -140,7 +150,7 @@ const reshapeCart = (cart: ShopifyCart): Cart => {
 
   return {
     ...cart,
-    lines: removeEdgesAndNodes(cart.lines)
+    lines: cart.lines ? removeEdgesAndNodes(cart.lines) : []
   };
 };
 

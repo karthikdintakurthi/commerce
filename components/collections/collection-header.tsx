@@ -50,7 +50,7 @@ export function CollectionHeader({ collection }: CollectionHeaderProps) {
           {/* Image */}
           {collection.image && (
             <div className="relative">
-              <div className="aspect-square rounded-lg overflow-hidden bg-white shadow-lg">
+              <div className="aspect-square rounded-lg overflow-hidden bg-background shadow-lg">
                 <Image
                   src={collection.image.url}
                   alt={collection.image.altText || collection.title}

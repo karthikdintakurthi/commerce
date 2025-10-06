@@ -71,8 +71,8 @@ export default async function RootLayout({
       <body className="min-h-screen bg-background font-body antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="light"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <CartProvider cartPromise={cart}>

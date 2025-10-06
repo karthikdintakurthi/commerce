@@ -80,7 +80,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
             <Shield className="h-3 w-3 mr-1" />
             Skin-friendly
           </Badge>
-          <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+          <Badge variant="secondary" className="bg-primary/10 text-primary">
             <Award className="h-3 w-3 mr-1" />
             Lightweight
           </Badge>
@@ -146,13 +146,11 @@ export function ProductDetails({ product }: ProductDetailsProps) {
 
       {/* Variant Picker */}
       {product.options && product.options.length > 0 && (
-        <div className="space-y-4">
-          <ProductVariantPicker
-            options={product.options}
-            variants={product.variants}
-            onVariantChange={handleVariantChange}
-          />
-        </div>
+        <ProductVariantPicker
+          options={product.options}
+          variants={product.variants}
+          onVariantChange={handleVariantChange}
+        />
       )}
 
       {/* Add to Cart */}

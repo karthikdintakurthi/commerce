@@ -79,7 +79,7 @@ export async function ProductCrossSell({ product }: ProductCrossSellProps) {
         <div className="text-center mt-8">
           <a
             href="/search"
-            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-primary-foreground bg-primary hover:bg-primary-700 transition-colors"
           >
             View All Products
           </a>
