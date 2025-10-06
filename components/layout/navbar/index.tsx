@@ -1,61 +1,115 @@
+'use client';
+
 import CartModal from 'components/cart/modal';
 import LogoSquare from 'components/logo-square';
-import { getMenu } from 'lib/shopify';
+import { Button } from 'components/ui/button';
+import { motion } from 'framer-motion';
 import { Menu } from 'lib/shopify/types';
+import { Moon, Search, Sun } from 'lucide-react';
+import { useTheme } from 'next-themes';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import MobileMenu from './mobile-menu';
-import Search, { SearchSkeleton } from './search';
+import SearchComponent, { SearchSkeleton } from './search';
 
 const { SITE_NAME } = process.env;
 
-export async function Navbar() {
-  const menu = await getMenu('next-js-frontend-header-menu');
+interface NavbarClientProps {
+  menu: Menu[];
+}
+
+export function NavbarClient({ menu }: NavbarClientProps) {
 
   return (
-    <nav className="relative flex items-center justify-between p-4 lg:px-6">
-      <div className="block flex-none md:hidden">
-        <Suspense fallback={null}>
-          <MobileMenu menu={menu} />
-        </Suspense>
-      </div>
-      <div className="flex w-full items-center">
-        <div className="flex w-full md:w-1/3">
-          <Link
-            href="/"
-            prefetch={true}
-            className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
-          >
-            <LogoSquare />
-            <div className="ml-2 flex-none text-sm font-medium uppercase md:hidden lg:block">
-              {SITE_NAME}
-            </div>
-          </Link>
-          {menu.length ? (
-            <ul className="hidden gap-6 text-sm md:flex md:items-center">
-              {menu.map((item: Menu) => (
-                <li key={item.title}>
+    <motion.nav 
+      className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="container mx-auto px-4">
+        <div className="flex h-16 items-center justify-between">
+          {/* Mobile Menu Button */}
+          <div className="flex items-center space-x-4 md:hidden">
+            <Suspense fallback={null}>
+              <MobileMenu menu={menu} />
+            </Suspense>
+          </div>
+
+          {/* Logo */}
+          <div className="flex items-center space-x-4">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 transition-opacity hover:opacity-80"
+            >
+              <LogoSquare />
+              <span className="hidden text-lg font-semibold sm:inline-block">
+                {SITE_NAME}
+              </span>
+            </Link>
+          </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex md:items-center md:space-x-6">
+            {menu.length > 0 && (
+              <div className="flex items-center space-x-6">
+                {menu.map((item: Menu) => (
                   <Link
+                    key={item.title}
                     href={item.path}
-                    prefetch={true}
-                    className="text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
+                    className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {item.title}
                   </Link>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </div>
-        <div className="hidden justify-center md:flex md:w-1/3">
-          <Suspense fallback={<SearchSkeleton />}>
-            <Search />
-          </Suspense>
-        </div>
-        <div className="flex justify-end md:w-1/3">
-          <CartModal />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Search */}
+          <div className="hidden md:flex md:flex-1 md:justify-center md:max-w-sm">
+            <Suspense fallback={<SearchSkeleton />}>
+              <SearchComponent />
+            </Suspense>
+          </div>
+
+          {/* Right Side Actions */}
+          <div className="flex items-center space-x-2">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+            
+            {/* Search Button (Mobile) */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              aria-label="Search"
+            >
+              <Search className="h-4 w-4" />
+            </Button>
+
+            {/* Cart */}
+            <CartModal />
+          </div>
         </div>
       </div>
-    </nav>
+    </motion.nav>
+  );
+}
+
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+      aria-label="Toggle theme"
+    >
+      <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <span className="sr-only">Toggle theme</span>
+    </Button>
   );
 }

@@ -7,6 +7,7 @@ import { Fragment, Suspense, useEffect, useState } from 'react';
 
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Menu } from 'lib/shopify/types';
+import { NavbarThemeToggle } from './navbar-theme-toggle';
 import Search, { SearchSkeleton } from './search';
 
 export default function MobileMenu({ menu }: { menu: Menu[] }) {
@@ -76,6 +77,12 @@ export default function MobileMenu({ menu }: { menu: Menu[] }) {
                     <Search />
                   </Suspense>
                 </div>
+                
+                {/* Theme Toggle in Mobile Menu */}
+                <div className="mb-4 flex justify-center">
+                  <NavbarThemeToggle variant="mobile" />
+                </div>
+                
                 {menu.length ? (
                   <ul className="flex w-full flex-col">
                     {menu.map((item: Menu) => (

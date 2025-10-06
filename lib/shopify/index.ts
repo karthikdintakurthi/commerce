@@ -1,68 +1,73 @@
 import {
-  HIDDEN_PRODUCT_TAG,
-  SHOPIFY_GRAPHQL_API_ENDPOINT,
-  TAGS
+    HIDDEN_PRODUCT_TAG,
+    SHOPIFY_GRAPHQL_API_ENDPOINT,
+    TAGS
 } from 'lib/constants';
 import { isShopifyError } from 'lib/type-guards';
 import { ensureStartsWith } from 'lib/utils';
 import {
-  revalidateTag,
-  unstable_cacheTag as cacheTag,
-  unstable_cacheLife as cacheLife
+    unstable_cacheLife as cacheLife,
+    unstable_cacheTag as cacheTag,
+    revalidateTag
 } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import {
-  addToCartMutation,
-  createCartMutation,
-  editCartItemsMutation,
-  removeFromCartMutation
+    addToCartMutation,
+    createCartMutation,
+    editCartItemsMutation,
+    removeFromCartMutation
 } from './mutations/cart';
 import { getCartQuery } from './queries/cart';
 import {
-  getCollectionProductsQuery,
-  getCollectionQuery,
-  getCollectionsQuery
+    getCollectionProductsQuery,
+    getCollectionQuery,
+    getCollectionsQuery
 } from './queries/collection';
 import { getMenuQuery } from './queries/menu';
 import { getPageQuery, getPagesQuery } from './queries/page';
 import {
-  getProductQuery,
-  getProductRecommendationsQuery,
-  getProductsQuery
+    getProductQuery,
+    getProductRecommendationsQuery,
+    getProductsQuery
 } from './queries/product';
 import {
-  Cart,
-  Collection,
-  Connection,
-  Image,
-  Menu,
-  Page,
-  Product,
-  ShopifyAddToCartOperation,
-  ShopifyCart,
-  ShopifyCartOperation,
-  ShopifyCollection,
-  ShopifyCollectionOperation,
-  ShopifyCollectionProductsOperation,
-  ShopifyCollectionsOperation,
-  ShopifyCreateCartOperation,
-  ShopifyMenuOperation,
-  ShopifyPageOperation,
-  ShopifyPagesOperation,
-  ShopifyProduct,
-  ShopifyProductOperation,
-  ShopifyProductRecommendationsOperation,
-  ShopifyProductsOperation,
-  ShopifyRemoveFromCartOperation,
-  ShopifyUpdateCartOperation
+    Cart,
+    Collection,
+    Connection,
+    Image,
+    Menu,
+    Page,
+    Product,
+    ShopifyAddToCartOperation,
+    ShopifyCart,
+    ShopifyCartOperation,
+    ShopifyCollection,
+    ShopifyCollectionOperation,
+    ShopifyCollectionProductsOperation,
+    ShopifyCollectionsOperation,
+    ShopifyCreateCartOperation,
+    ShopifyMenuOperation,
+    ShopifyPageOperation,
+    ShopifyPagesOperation,
+    ShopifyProduct,
+    ShopifyProductOperation,
+    ShopifyProductRecommendationsOperation,
+    ShopifyProductsOperation,
+    ShopifyRemoveFromCartOperation,
+    ShopifyUpdateCartOperation
 } from './types';
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN
   ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://')
   : '';
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
-const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
+const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+
+// Check if Shopify is properly configured
+if (!domain || !key) {
+  console.warn('Shopify not configured. Please set SHOPIFY_STORE_DOMAIN and SHOPIFY_STOREFRONT_ACCESS_TOKEN environment variables.');
+}
 
 type ExtractVariables<T> = T extends { variables: object }
   ? T['variables']
@@ -77,6 +82,11 @@ export async function shopifyFetch<T>({
   query: string;
   variables?: ExtractVariables<T>;
 }): Promise<{ status: number; body: T } | never> {
+  // Return early if Shopify is not configured
+  if (!domain || !key) {
+    throw new Error('Shopify not configured. Please set environment variables.');
+  }
+
   try {
     const result = await fetch(endpoint, {
       method: 'POST',
@@ -172,9 +182,49 @@ const reshapeImages = (images: Connection<Image>, productTitle: string) => {
     const filename = image.url.match(/.*\/(.*)\..*/)?.[1];
     return {
       ...image,
-      altText: image.altText || `${productTitle} - ${filename}`
+      altText: image.altText || `${productTitle} - ${filename}`,
+      isVideo: image.isVideo || false,
+      videoUrl: image.videoUrl,
+      videoDuration: image.videoDuration
     };
   });
+};
+
+const reshapeMediaToImages = (media: Connection<any>, productTitle: string) => {
+  const flattened = removeEdgesAndNodes(media);
+  
+  return flattened.map((item) => {
+    if (item.mediaContentType === 'VIDEO' && item.sources?.[0]) {
+      const videoSource = item.sources[0];
+      return {
+        url: videoSource.url,
+        altText: `${productTitle} - Video`,
+        width: videoSource.width,
+        height: videoSource.height,
+        isVideo: true,
+        videoUrl: videoSource.url,
+        videoDuration: undefined // Duration not available from Shopify Video sources
+      };
+    } else if (item.mediaContentType === 'EXTERNAL_VIDEO' && item.embeddedUrl) {
+      // For external videos, we'll use a placeholder image or the embedded URL
+      return {
+        url: item.embeddedUrl, // This will be handled by the component
+        altText: `${productTitle} - External Video`,
+        width: 800,
+        height: 800,
+        isVideo: true,
+        videoUrl: item.embeddedUrl,
+        videoDuration: undefined
+      };
+    } else if (item.mediaContentType === 'IMAGE' && item.image) {
+      return {
+        ...item.image,
+        altText: item.image.altText || `${productTitle} - Image`,
+        isVideo: false
+      };
+    }
+    return null;
+  }).filter(Boolean);
 };
 
 const reshapeProduct = (
@@ -188,12 +238,22 @@ const reshapeProduct = (
     return undefined;
   }
 
-  const { images, variants, ...rest } = product;
+  const { images, variants, media, ...rest } = product;
+  
+  // Process media to include videos as image-like objects
+  const mediaImages = media ? reshapeMediaToImages(media, product.title) : [];
+  
+  // Combine regular images with media (videos)
+  const allImages = [
+    ...reshapeImages(images, product.title),
+    ...mediaImages
+  ];
 
   return {
     ...rest,
-    images: reshapeImages(images, product.title),
-    variants: removeEdgesAndNodes(variants)
+    images: allImages,
+    variants: removeEdgesAndNodes(variants),
+    media: media ? removeEdgesAndNodes(media) : []
   };
 };
 
@@ -290,14 +350,19 @@ export async function getCollection(
   cacheTag(TAGS.collections);
   cacheLife('days');
 
-  const res = await shopifyFetch<ShopifyCollectionOperation>({
-    query: getCollectionQuery,
-    variables: {
-      handle
-    }
-  });
+  try {
+    const res = await shopifyFetch<ShopifyCollectionOperation>({
+      query: getCollectionQuery,
+      variables: {
+        handle
+      }
+    });
 
-  return reshapeCollection(res.body.data.collection);
+    return reshapeCollection(res.body.data.collection);
+  } catch (error) {
+    console.warn(`getCollection: Failed to fetch collection ${handle}:`, error);
+    return undefined;
+  }
 }
 
 export async function getCollectionProducts({
@@ -313,23 +378,28 @@ export async function getCollectionProducts({
   cacheTag(TAGS.collections, TAGS.products);
   cacheLife('days');
 
-  const res = await shopifyFetch<ShopifyCollectionProductsOperation>({
-    query: getCollectionProductsQuery,
-    variables: {
-      handle: collection,
-      reverse,
-      sortKey: sortKey === 'CREATED_AT' ? 'CREATED' : sortKey
-    }
-  });
+  try {
+    const res = await shopifyFetch<ShopifyCollectionProductsOperation>({
+      query: getCollectionProductsQuery,
+      variables: {
+        handle: collection,
+        reverse,
+        sortKey: sortKey === 'CREATED_AT' ? 'CREATED' : sortKey
+      }
+    });
 
-  if (!res.body.data.collection) {
-    console.log(`No collection found for \`${collection}\``);
+    if (!res.body.data.collection) {
+      console.log(`No collection found for \`${collection}\``);
+      return [];
+    }
+
+    return reshapeProducts(
+      removeEdgesAndNodes(res.body.data.collection.products)
+    );
+  } catch (error) {
+    console.warn(`getCollectionProducts: Failed to fetch products for collection ${collection}:`, error);
     return [];
   }
-
-  return reshapeProducts(
-    removeEdgesAndNodes(res.body.data.collection.products)
-  );
 }
 
 export async function getCollections(): Promise<Collection[]> {

@@ -1,75 +1,183 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fcommerce&project-name=commerce&repo-name=commerce&demo-title=Next.js%20Commerce&demo-url=https%3A%2F%2Fdemo.vercel.store&demo-image=https%3A%2F%2Fbigcommerce-demo-asset-ksvtgfvnd.vercel.app%2Fbigcommerce.png&env=COMPANY_NAME,SHOPIFY_REVALIDATION_SECRET,SHOPIFY_STORE_DOMAIN,SHOPIFY_STOREFRONT_ACCESS_TOKEN,SITE_NAME)
+# Vanitha Headless Next.js Storefront
 
-# Next.js Commerce
+A high-performance, server-rendered Next.js 15 App Router ecommerce application built with Shopify as the headless CMS.
 
-A high-performance, server-rendered Next.js App Router ecommerce application.
+## Features
 
-This template uses React Server Components, Server Actions, `Suspense`, `useOptimistic`, and more.
+- ✅ **Next.js 15** with App Router and TypeScript
+- ✅ **Tailwind CSS** for styling
+- ✅ **shadcn/ui** components (Button, Badge, Card, Sheet, Dialog)
+- ✅ **Framer Motion** for animations
+- ✅ **Shopify Storefront API** integration with typed client
+- ✅ **Absolute imports** with `@/` alias
+- ✅ **Health check endpoint** at `/_health`
+- ✅ **Production-ready** with caching and error handling
 
-<h3 id="v1-note"></h3>
+## Tech Stack
 
-> Note: Looking for Next.js Commerce v1? View the [code](https://github.com/vercel/commerce/tree/v1), [demo](https://commerce-v1.vercel.store), and [release notes](https://github.com/vercel/commerce/releases/tag/v1).
+- **Framework**: Next.js 15.3.0 (canary)
+- **Language**: TypeScript 5.8.2
+- **Styling**: Tailwind CSS 4.0.14
+- **UI Components**: Headless UI + Heroicons
+- **Animations**: Framer Motion 12.23.22
+- **Package Manager**: pnpm
+- **Commerce**: Shopify Storefront API
 
-## Providers
+## Getting Started
 
-Vercel will only be actively maintaining a Shopify version [as outlined in our vision and strategy for Next.js Commerce](https://github.com/vercel/commerce/pull/966).
+### Prerequisites
 
-Vercel is happy to partner and work with any commerce provider to help them get a similar template up and running and listed below. Alternative providers should be able to fork this repository and swap out the `lib/shopify` file with their own implementation while leaving the rest of the template mostly unchanged.
+- Node.js 18+ 
+- pnpm package manager
+- Shopify store with Storefront API access
 
-- Shopify (this repository)
-- [BigCommerce](https://github.com/bigcommerce/nextjs-commerce) ([Demo](https://next-commerce-v2.vercel.app/))
-- [Ecwid by Lightspeed](https://github.com/Ecwid/ecwid-nextjs-commerce/) ([Demo](https://ecwid-nextjs-commerce.vercel.app/))
-- [Geins](https://github.com/geins-io/vercel-nextjs-commerce) ([Demo](https://geins-nextjs-commerce-starter.vercel.app/))
-- [Medusa](https://github.com/medusajs/vercel-commerce) ([Demo](https://medusa-nextjs-commerce.vercel.app/))
-- [Prodigy Commerce](https://github.com/prodigycommerce/nextjs-commerce) ([Demo](https://prodigy-nextjs-commerce.vercel.app/))
-- [Saleor](https://github.com/saleor/nextjs-commerce) ([Demo](https://saleor-commerce.vercel.app/))
-- [Shopware](https://github.com/shopwareLabs/vercel-commerce) ([Demo](https://shopware-vercel-commerce-react.vercel.app/))
-- [Swell](https://github.com/swellstores/verswell-commerce) ([Demo](https://verswell-commerce.vercel.app/))
-- [Umbraco](https://github.com/umbraco/Umbraco.VercelCommerce.Demo) ([Demo](https://vercel-commerce-demo.umbraco.com/))
-- [Wix](https://github.com/wix/headless-templates/tree/main/nextjs/commerce) ([Demo](https://wix-nextjs-commerce.vercel.app/))
-- [Fourthwall](https://github.com/FourthwallHQ/vercel-commerce) ([Demo](https://vercel-storefront.fourthwall.app/))
+### Installation
 
-> Note: Providers, if you are looking to use similar products for your demo, you can [download these assets](https://drive.google.com/file/d/1q_bKerjrwZgHwCw0ovfUMW6He9VtepO_/view?usp=sharing).
+1. Clone the repository:
+```bash
+git clone https://github.com/your-username/vanitha-headless-nextjs.git
+cd vanitha-headless-nextjs
+```
 
-## Integrations
-
-Integrations enable upgraded or additional functionality for Next.js Commerce
-
-- [Orama](https://github.com/oramasearch/nextjs-commerce) ([Demo](https://vercel-commerce.oramasearch.com/))
-
-  - Upgrades search to include typeahead with dynamic re-rendering, vector-based similarity search, and JS-based configuration.
-  - Search runs entirely in the browser for smaller catalogs or on a CDN for larger.
-
-- [React Bricks](https://github.com/ReactBricks/nextjs-commerce-rb) ([Demo](https://nextjs-commerce.reactbricks.com/))
-  - Edit pages, product details, and footer content visually using [React Bricks](https://www.reactbricks.com) visual headless CMS.
-
-## Running locally
-
-You will need to use the environment variables [defined in `.env.example`](.env.example) to run Next.js Commerce. It's recommended you use [Vercel Environment Variables](https://vercel.com/docs/concepts/projects/environment-variables) for this, but a `.env` file is all that is necessary.
-
-> Note: You should not commit your `.env` file or it will expose secrets that will allow others to control your Shopify store.
-
-1. Install Vercel CLI: `npm i -g vercel`
-2. Link local instance with Vercel and GitHub accounts (creates `.vercel` directory): `vercel link`
-3. Download your environment variables: `vercel env pull`
-
+2. Install dependencies:
 ```bash
 pnpm install
+```
+
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
+
+Edit `.env.local` with your Shopify credentials:
+```env
+SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
+SHOPIFY_STOREFRONT_ACCESS_TOKEN=your_storefront_access_token
+SHOPIFY_REVALIDATION_SECRET=your_revalidation_secret
+```
+
+### Development
+
+Start the development server:
+```bash
 pnpm dev
 ```
 
-Your app should now be running on [localhost:3000](http://localhost:3000/).
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-<details>
-  <summary>Expand if you work at Vercel and want to run locally and / or contribute</summary>
+### Health Check
 
-1. Run `vc link`.
-1. Select the `Vercel Solutions` scope.
-1. Connect to the existing `commerce-shopify` project.
-1. Run `vc env pull` to get environment variables.
-1. Run `pnpm dev` to ensure everything is working correctly.
-</details>
+The application includes a health check endpoint at `/_health`:
+```bash
+curl http://localhost:3000/_health
+```
 
-## Vercel, Next.js Commerce, and Shopify Integration Guide
+Response:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-01T00:00:00.000Z",
+  "service": "vanitha-headless-nextjs"
+}
+```
 
-You can use this comprehensive [integration guide](https://vercel.com/docs/integrations/ecommerce/shopify) with step-by-step instructions on how to configure Shopify as a headless CMS using Next.js Commerce as your headless Shopify storefront on Vercel.
+## Project Structure
+
+```
+├── app/                    # Next.js App Router pages
+│   ├── _health/           # Health check endpoint
+│   ├── api/               # API routes
+│   ├── product/           # Product pages
+│   └── search/            # Search/collection pages
+├── components/            # React components
+│   ├── cart/              # Shopping cart components
+│   ├── grid/              # Product grid components
+│   ├── layout/            # Layout components
+│   └── product/           # Product-specific components
+├── lib/                   # Utility libraries
+│   ├── shopify/           # Shopify API integration
+│   │   ├── fragments/     # GraphQL fragments
+│   │   ├── mutations/     # GraphQL mutations
+│   │   └── queries/       # GraphQL queries
+│   └── utils.ts           # Utility functions
+└── fonts/                 # Custom fonts
+```
+
+## Shopify Integration
+
+The application uses the Shopify Storefront API with a fully typed client. Key features:
+
+- **Typed GraphQL Operations**: All API calls are fully typed
+- **Caching**: Built-in caching with Next.js cache API
+- **Error Handling**: Comprehensive error handling and logging
+- **Webhook Support**: Automatic revalidation on product/collection updates
+
+### Key Functions
+
+- `getProduct(handle)` - Fetch single product
+- `getProducts()` - Fetch product list with filtering
+- `getCollection(handle)` - Fetch collection details
+- `getCollections()` - Fetch all collections
+- `createCart()` - Create shopping cart
+- `addToCart()` - Add items to cart
+- `getCart()` - Retrieve cart contents
+
+## Available Scripts
+
+```bash
+# Development
+pnpm dev              # Start development server with Turbopack
+
+# Production
+pnpm build           # Build for production
+pnpm start           # Start production server
+
+# Code Quality
+pnpm prettier        # Format code
+pnpm prettier:check  # Check code formatting
+pnpm test            # Run tests (currently prettier check)
+```
+
+## Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `SHOPIFY_STORE_DOMAIN` | Your Shopify store domain (e.g., `your-store.myshopify.com`) | Yes |
+| `SHOPIFY_STOREFRONT_ACCESS_TOKEN` | Shopify Storefront API access token | Yes |
+| `SHOPIFY_REVALIDATION_SECRET` | Secret for webhook revalidation | Yes |
+| `NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN` | Public store domain (optional) | No |
+
+## Deployment
+
+### Vercel (Recommended)
+
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Set environment variables in Vercel dashboard
+4. Deploy automatically on push
+
+### Other Platforms
+
+The application can be deployed to any platform that supports Next.js:
+- Netlify
+- AWS Amplify
+- Railway
+- Render
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- Built on top of [Vercel Commerce](https://github.com/vercel/commerce)
+- Uses [Shopify Storefront API](https://shopify.dev/docs/api/storefront)
+- Powered by [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/)

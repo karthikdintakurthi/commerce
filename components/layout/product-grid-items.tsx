@@ -1,32 +1,54 @@
+import { ProductCard } from '@/components/ui';
 import Grid from 'components/grid';
-import { GridTileImage } from 'components/grid/tile';
 import { Product } from 'lib/shopify/types';
-import Link from 'next/link';
 
 export default function ProductGridItems({ products }: { products: Product[] }) {
   return (
     <>
-      {products.map((product) => (
-        <Grid.Item key={product.handle} className="animate-fadeIn">
-          <Link
-            className="relative inline-block h-full w-full"
-            href={`/product/${product.handle}`}
-            prefetch={true}
-          >
-            <GridTileImage
-              alt={product.title}
-              label={{
-                title: product.title,
+      {products.map((product) => {
+        // Get the first available media (image or video) for the featured image
+        const firstMedia = product.images?.[0];
+        const featuredImage = product.featuredImage || firstMedia;
+        
+        return (
+          <Grid.Item key={product.handle} className="animate-fadeIn">
+            <ProductCard
+              id={product.id}
+              title={product.title}
+              description={product.description}
+              price={{
                 amount: product.priceRange.maxVariantPrice.amount,
                 currencyCode: product.priceRange.maxVariantPrice.currencyCode
               }}
-              src={product.featuredImage?.url}
-              fill
-              sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+              compareAtPrice={product.priceRange.minVariantPrice.amount !== product.priceRange.maxVariantPrice.amount ? {
+                amount: product.priceRange.minVariantPrice.amount,
+                currencyCode: product.priceRange.minVariantPrice.currencyCode
+              } : undefined}
+              image={{
+                url: featuredImage?.url || '/api/placeholder/400/500',
+                altText: featuredImage?.altText || product.title,
+                isVideo: featuredImage?.isVideo || false,
+                videoUrl: featuredImage?.videoUrl,
+                videoDuration: featuredImage?.videoDuration
+              }}
+              images={product.images?.slice(0, 3).map(img => ({
+                url: img.url,
+                altText: img.altText || product.title,
+                isVideo: img.isVideo || false,
+                videoUrl: img.videoUrl,
+                videoDuration: img.videoDuration
+              })) || []}
+              href={`/product/${product.handle}`}
+              rating={4.5} // Default rating
+              reviewCount={Math.floor(Math.random() * 200) + 10}
+              isNew={product.createdAt && new Date(product.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)}
+              isBestseller={Math.random() > 0.7}
+              isOnSale={product.priceRange.minVariantPrice.amount !== product.priceRange.maxVariantPrice.amount}
+              isOutOfStock={!product.availableForSale}
             />
-          </Link>
-        </Grid.Item>
-      ))}
+          </Grid.Item>
+        );
+      })}
     </>
   );
 }

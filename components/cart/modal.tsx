@@ -1,8 +1,8 @@
 'use client';
 
-import clsx from 'clsx';
 import { Dialog, Transition } from '@headlessui/react';
 import { ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 import LoadingDots from 'components/loading-dots';
 import Price from 'components/price';
 import { DEFAULT_OPTION } from 'lib/constants';
@@ -22,17 +22,17 @@ type MerchandiseSearchParams = {
 };
 
 export default function CartModal() {
-  const { cart, updateCartItem } = useCart();
+  const { cart, updateCartItem, isLoaded } = useCart();
   const [isOpen, setIsOpen] = useState(false);
-  const quantityRef = useRef(cart?.totalQuantity);
+  const quantityRef = useRef(cart?.totalQuantity || 0);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
 
   useEffect(() => {
-    if (!cart) {
+    if (isLoaded && !cart) {
       createCartAndSetCookie();
     }
-  }, [cart]);
+  }, [cart, isLoaded]);
 
   useEffect(() => {
     if (
@@ -50,7 +50,7 @@ export default function CartModal() {
   return (
     <>
       <button aria-label="Open cart" onClick={openCart}>
-        <OpenCart quantity={cart?.totalQuantity} />
+        <OpenCart quantity={isLoaded ? cart?.totalQuantity : 0} />
       </button>
       <Transition show={isOpen}>
         <Dialog onClose={closeCart} className="relative z-50">
@@ -82,7 +82,14 @@ export default function CartModal() {
                 </button>
               </div>
 
-              {!cart || cart.lines.length === 0 ? (
+              {!isLoaded ? (
+                <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
+                  <LoadingDots className="h-8 w-8" />
+                  <p className="mt-6 text-center text-lg font-medium">
+                    Loading cart...
+                  </p>
+                </div>
+              ) : !cart || cart.lines.length === 0 ? (
                 <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
                   <ShoppingCartIcon className="h-16" />
                   <p className="mt-6 text-center text-2xl font-bold">
@@ -135,12 +142,12 @@ export default function CartModal() {
                                     width={64}
                                     height={64}
                                     alt={
-                                      item.merchandise.product.featuredImage
-                                        .altText ||
+                                      item.merchandise.product.featuredImage?.altText ||
                                       item.merchandise.product.title
                                     }
                                     src={
-                                      item.merchandise.product.featuredImage.url
+                                      item.merchandise.product.featuredImage?.url ||
+                                      '/api/placeholder/64/64'
                                     }
                                   />
                                 </div>

@@ -1,4 +1,5 @@
 import imageFragment from './image';
+import mediaFragment from './media';
 import seoFragment from './seo';
 
 const productFragment = /* GraphQL */ `
@@ -51,6 +52,13 @@ const productFragment = /* GraphQL */ `
         }
       }
     }
+    media(first: 20) {
+      edges {
+        node {
+          ...media
+        }
+      }
+    }
     seo {
       ...seo
     }
@@ -58,6 +66,7 @@ const productFragment = /* GraphQL */ `
     updatedAt
   }
   ${imageFragment}
+  ${mediaFragment}
   ${seoFragment}
 `;
 

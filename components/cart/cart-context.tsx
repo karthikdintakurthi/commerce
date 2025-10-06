@@ -1,17 +1,18 @@
 'use client';
 
 import type {
-  Cart,
-  CartItem,
-  Product,
-  ProductVariant
+    Cart,
+    CartItem,
+    Product,
+    ProductVariant
 } from 'lib/shopify/types';
 import React, {
-  createContext,
-  use,
-  useContext,
-  useMemo,
-  useOptimistic
+    createContext,
+    useContext,
+    useEffect,
+    useMemo,
+    useOptimistic,
+    useState
 } from 'react';
 
 type UpdateType = 'plus' | 'minus' | 'delete';
@@ -210,7 +211,31 @@ export function useCart() {
     throw new Error('useCart must be used within a CartProvider');
   }
 
-  const initialCart = use(context.cartPromise);
+  const [initialCart, setInitialCart] = useState<Cart | undefined>(undefined);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const loadCart = async () => {
+      try {
+        if (context.cartPromise && typeof context.cartPromise.then === 'function') {
+          const cart = await context.cartPromise;
+          setInitialCart(cart);
+          setIsLoaded(true);
+        } else {
+          // If cartPromise is not a proper Promise, just set as undefined
+          setInitialCart(undefined);
+          setIsLoaded(true);
+        }
+      } catch (error) {
+        console.warn('Failed to load cart:', error);
+        setInitialCart(undefined);
+        setIsLoaded(true);
+      }
+    };
+
+    loadCart();
+  }, [context.cartPromise]);
+
   const [optimisticCart, updateOptimisticCart] = useOptimistic(
     initialCart,
     cartReducer
@@ -231,8 +256,9 @@ export function useCart() {
     () => ({
       cart: optimisticCart,
       updateCartItem,
-      addCartItem
+      addCartItem,
+      isLoaded
     }),
-    [optimisticCart]
+    [optimisticCart, isLoaded]
   );
 }

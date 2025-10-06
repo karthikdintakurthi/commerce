@@ -1,13 +1,21 @@
-import { baseUrl } from 'lib/utils';
+import { MetadataRoute } from 'next';
 
-export default function robots() {
+export default function robots(): MetadataRoute.Robots {
+  const disallowPaths = [
+    '/api/',
+    '/admin/',
+    '/_next/',
+    '/private/',
+  ];
+
   return {
     rules: [
       {
-        userAgent: '*'
-      }
+        userAgent: '*',
+        allow: '/',
+        disallow: disallowPaths,
+      },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
-    host: baseUrl
+    sitemap: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://vanitha.com'}/sitemap.xml`,
   };
 }
