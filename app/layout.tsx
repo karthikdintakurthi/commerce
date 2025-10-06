@@ -6,6 +6,7 @@ import { AriaLiveRegion } from 'components/ui/aria-live-region';
 import { SkipToMain } from 'components/ui/skip-link';
 import { WelcomeToast } from 'components/welcome-toast';
 import { generateMetadata as generateSEOMetadata } from 'lib/seo';
+import { getCart } from 'lib/shopify';
 // import { getCart } from 'lib/server-cart';
 import { baseUrl } from 'lib/utils';
 import { Cinzel, Cormorant_Garamond, Inter, Sarabun } from 'next/font/google';
@@ -58,8 +59,8 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  // Initialize cart - will be created when needed
-  const cart = Promise.resolve(undefined);
+  // Initialize cart from Shopify
+  const cart = getCart();
 
   return (
     <html 

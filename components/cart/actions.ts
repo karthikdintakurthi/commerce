@@ -25,10 +25,8 @@ export async function addItem(
     revalidateTag(TAGS.cart);
     return null; // Success
   } catch (e) {
-    console.warn('Cart: Shopify not configured, using local cart');
-    // For demo purposes, we'll just return success
-    // The optimistic updates will handle the cart state
-    return null; // Success
+    console.error('Failed to add item to cart:', e);
+    return 'Error adding item to cart';
   }
 }
 
@@ -51,8 +49,8 @@ export async function removeItem(prevState: any, merchandiseId: string) {
       return 'Item not found in cart';
     }
   } catch (e) {
-    console.warn('Cart: Shopify not configured, using local cart');
-    return null; // Success - optimistic updates handle the state
+    console.error('Failed to remove item from cart:', e);
+    return 'Error removing item from cart';
   }
 }
 
@@ -95,8 +93,8 @@ export async function updateItemQuantity(
 
     revalidateTag(TAGS.cart);
   } catch (e) {
-    console.warn('Cart: Shopify not configured, using local cart');
-    return null; // Success - optimistic updates handle the state
+    console.error('Failed to remove item from cart:', e);
+    return 'Error removing item from cart';
   }
 }
 
@@ -105,9 +103,8 @@ export async function redirectToCheckout() {
     let cart = await getCart();
     redirect(cart!.checkoutUrl);
   } catch (e) {
-    console.warn('Cart: Shopify not configured, redirecting to demo checkout');
-    // For demo purposes, redirect to a demo checkout page
-    redirect('/checkout-demo');
+    console.error('Failed to redirect to checkout:', e);
+    throw new Error('Unable to proceed to checkout');
   }
 }
 
@@ -116,8 +113,7 @@ export async function createCartAndSetCookie() {
     let cart = await createCart();
     (await cookies()).set('cartId', cart.id!);
   } catch (error) {
-    console.warn('Cart: Shopify not configured, using mock cart');
-    // For demo purposes, set a mock cart ID
-    (await cookies()).set('cartId', 'mock-cart-id');
+    console.error('Failed to create cart:', error);
+    throw new Error('Unable to create cart');
   }
 }

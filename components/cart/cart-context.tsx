@@ -208,7 +208,6 @@ export function CartProvider({
   const [initialCart, setInitialCart] = useState<Cart | undefined>(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
   const [announcement, setAnnouncement] = useState<string>('');
-  const [localCart, setLocalCart] = useState<Cart | undefined>(undefined);
 
   useEffect(() => {
     const loadCart = async () => {
@@ -216,17 +215,14 @@ export function CartProvider({
         if (cartPromise && typeof cartPromise.then === 'function') {
           const cart = await cartPromise;
           setInitialCart(cart);
-          setLocalCart(cart || createEmptyCart());
           setIsLoaded(true);
         } else {
           setInitialCart(undefined);
-          setLocalCart(createEmptyCart());
           setIsLoaded(true);
         }
       } catch (error) {
         console.warn('Failed to load cart:', error);
         setInitialCart(undefined);
-        setLocalCart(createEmptyCart());
         setIsLoaded(true);
       }
     };
@@ -235,29 +231,10 @@ export function CartProvider({
   }, [cartPromise]);
 
   const [optimisticCart, updateOptimisticCart] = useOptimistic(
-    localCart,
+    initialCart,
     cartReducer
   );
 
-  // Persist cart to localStorage
-  useEffect(() => {
-    if (optimisticCart && optimisticCart.lines.length > 0) {
-      localStorage.setItem('cart', JSON.stringify(optimisticCart));
-    }
-  }, [optimisticCart]);
-
-  // Load cart from localStorage on mount
-  useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart && !localCart) {
-      try {
-        const parsedCart = JSON.parse(savedCart);
-        setLocalCart(parsedCart);
-      } catch (error) {
-        console.warn('Failed to parse saved cart:', error);
-      }
-    }
-  }, [localCart]);
 
   const updateCartItem = useCallback((merchandiseId: string, updateType: UpdateType) => {
     updateOptimisticCart({
