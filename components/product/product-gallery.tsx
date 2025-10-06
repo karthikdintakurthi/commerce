@@ -22,7 +22,12 @@ export function ProductGallery({ images, media }: ProductGalleryProps) {
   const hasMedia = media && media.length > 0;
   const displayItems = hasMedia ? media : images.map(img => ({
     id: img.url,
-    image: img,
+    image: {
+      ...img,
+      altText: img.altText || 'Product image',
+      width: img.width || 800,
+      height: img.height || 800
+    },
     mediaContentType: 'IMAGE' as const
   }));
   
@@ -43,9 +48,9 @@ export function ProductGallery({ images, media }: ProductGalleryProps) {
     <div className="space-y-4">
       {/* Main media */}
       <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
-        {hasMedia ? (
+        {hasMedia && displayItems[selectedIndex] ? (
           <ProductMedia
-            media={displayItems[selectedIndex]}
+            media={displayItems[selectedIndex]!}
             alt={`Product media ${selectedIndex + 1}`}
             fill
             className="object-cover"
@@ -82,7 +87,7 @@ export function ProductGallery({ images, media }: ProductGalleryProps) {
                 />
               ) : (
                 <Image
-                  src={images[index].url}
+                  src={images[index]?.url || '/api/placeholder/100/100'}
                   alt={images[index]?.altText || `Product image ${index + 1}`}
                   fill
                   className="object-cover"

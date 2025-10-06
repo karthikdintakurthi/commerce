@@ -1,9 +1,10 @@
 export default {
-  experimental: {
-    ppr: true,
-    inlineCss: true,
-    useCache: true
-  },
+  // Temporarily disable experimental features that are causing Turbopack issues
+  // experimental: {
+  //   ppr: true,
+  //   inlineCss: true,
+  //   useCache: true
+  // },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

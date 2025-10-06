@@ -8,6 +8,7 @@ import type {
 } from 'lib/shopify/types';
 import React, {
     createContext,
+    useCallback,
     useContext,
     useEffect,
     useMemo,
@@ -29,6 +30,12 @@ type CartAction =
 
 type CartContextType = {
   cartPromise: Promise<Cart | undefined>;
+  cart: Cart | undefined;
+  updateCartItem: (merchandiseId: string, updateType: UpdateType) => void;
+  addCartItem: (variant: ProductVariant, product: Product) => void;
+  isLoaded: boolean;
+  announcement: string;
+  setAnnouncement: (message: string) => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -198,31 +205,18 @@ export function CartProvider({
   children: React.ReactNode;
   cartPromise: Promise<Cart | undefined>;
 }) {
-  return (
-    <CartContext.Provider value={{ cartPromise }}>
-      {children}
-    </CartContext.Provider>
-  );
-}
-
-export function useCart() {
-  const context = useContext(CartContext);
-  if (context === undefined) {
-    throw new Error('useCart must be used within a CartProvider');
-  }
-
   const [initialCart, setInitialCart] = useState<Cart | undefined>(undefined);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [announcement, setAnnouncement] = useState<string>('');
 
   useEffect(() => {
     const loadCart = async () => {
       try {
-        if (context.cartPromise && typeof context.cartPromise.then === 'function') {
-          const cart = await context.cartPromise;
+        if (cartPromise && typeof cartPromise.then === 'function') {
+          const cart = await cartPromise;
           setInitialCart(cart);
           setIsLoaded(true);
         } else {
-          // If cartPromise is not a proper Promise, just set as undefined
           setInitialCart(undefined);
           setIsLoaded(true);
         }
@@ -234,31 +228,50 @@ export function useCart() {
     };
 
     loadCart();
-  }, [context.cartPromise]);
+  }, [cartPromise]);
 
   const [optimisticCart, updateOptimisticCart] = useOptimistic(
     initialCart,
     cartReducer
   );
 
-  const updateCartItem = (merchandiseId: string, updateType: UpdateType) => {
+  const updateCartItem = useCallback((merchandiseId: string, updateType: UpdateType) => {
     updateOptimisticCart({
       type: 'UPDATE_ITEM',
       payload: { merchandiseId, updateType }
     });
-  };
+  }, [updateOptimisticCart]);
 
-  const addCartItem = (variant: ProductVariant, product: Product) => {
+  const addCartItem = useCallback((variant: ProductVariant, product: Product) => {
     updateOptimisticCart({ type: 'ADD_ITEM', payload: { variant, product } });
-  };
+    setAnnouncement(`${product.title} added to cart`);
+  }, [updateOptimisticCart]);
 
-  return useMemo(
+  const contextValue = useMemo(
     () => ({
+      cartPromise,
       cart: optimisticCart,
       updateCartItem,
       addCartItem,
-      isLoaded
+      isLoaded,
+      announcement,
+      setAnnouncement
     }),
-    [optimisticCart, isLoaded]
+    [cartPromise, optimisticCart, updateCartItem, addCartItem, isLoaded, announcement]
   );
+
+  return (
+    <CartContext.Provider value={contextValue}>
+      {children}
+    </CartContext.Provider>
+  );
+}
+
+export function useCart() {
+  const context = useContext(CartContext);
+  if (context === undefined) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+
+  return context;
 }

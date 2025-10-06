@@ -16,10 +16,10 @@ export async function ShopifyFallback({ type }: ShopifyFallbackProps) {
             <section className="py-16 px-4">
               <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                     Featured Products
                   </h2>
-                  <p className="text-lg text-gray-600">
+                  <p className="text-lg text-muted-foreground">
                     Discover our latest collection
                   </p>
                 </div>
@@ -33,13 +33,13 @@ export async function ShopifyFallback({ type }: ShopifyFallbackProps) {
       case 'collections':
         // For collections, we'll show a simple grid of categories
         return (
-          <section className="py-16 px-4 bg-gray-50">
+          <section className="py-16 px-4 bg-muted/30">
             <div className="max-w-7xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                   Shop by Category
                 </h2>
-                <p className="text-lg text-gray-600">
+                <p className="text-lg text-muted-foreground">
                   Explore our curated collections
                 </p>
               </div>
@@ -56,15 +56,15 @@ export async function ShopifyFallback({ type }: ShopifyFallbackProps) {
                   <a
                     key={index}
                     href={category.url}
-                    className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 p-6"
+                    className="group bg-card border border-border rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 p-6 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   >
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-xl font-semibold text-foreground mb-2 group-hover:text-accent transition-colors">
                       {category.name}
                     </h3>
-                    <p className="text-gray-600 mb-4">
+                    <p className="text-muted-foreground mb-4">
                       {category.description}
                     </p>
-                    <span className="text-blue-600 font-semibold text-sm group-hover:text-blue-700">
+                    <span className="text-accent font-semibold text-sm group-hover:text-accent/80">
                       Shop Now →
                     </span>
                   </a>
@@ -77,15 +77,15 @@ export async function ShopifyFallback({ type }: ShopifyFallbackProps) {
       case 'hero':
         // Simple hero fallback
         return (
-          <section className="relative min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-blue-900 to-purple-900">
+          <section className="relative min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-chip-emerald to-chip-ruby">
             <div className="relative z-10 max-w-6xl mx-auto px-4 py-16 text-center">
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+              <h1 className="text-5xl md:text-7xl font-bold text-on-emerald mb-6 leading-tight">
                 Vanitha Fashion Jewelry
               </h1>
-              <p className="text-2xl md:text-3xl text-white/90 mb-8 font-light">
+              <p className="text-2xl md:text-3xl text-on-emerald/90 mb-8 font-light">
                 Premium Indian Jewelry & Accessories
               </p>
-              <p className="text-lg md:text-xl text-white/80 mb-8 leading-relaxed max-w-3xl mx-auto">
+              <p className="text-lg md:text-xl text-on-emerald/80 mb-8 leading-relaxed max-w-3xl mx-auto">
                 Discover our exquisite collection of traditional and contemporary jewelry pieces. 
                 From elegant bangles and stunning earrings to beautiful necklaces and mangalsutras.
               </p>
@@ -93,13 +93,13 @@ export async function ShopifyFallback({ type }: ShopifyFallbackProps) {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
                   href="/search"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-blue-900 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:bg-gray-100"
+                  className="inline-flex items-center justify-center px-8 py-4 bg-card text-card-foreground rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:bg-card/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                 >
                   Browse Collection
                 </a>
                 <a
                   href="/search?q=featured"
-                  className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:bg-white hover:text-blue-900"
+                  className="inline-flex items-center justify-center px-8 py-4 border-2 border-card text-card rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 hover:bg-card hover:text-card-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                 >
                   View Featured
                 </a>

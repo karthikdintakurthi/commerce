@@ -84,7 +84,7 @@ export function generateMetadata(config: SEOConfig): Metadata {
         }
       ] : undefined,
       locale,
-      type,
+      type: type === 'product' ? 'website' : type,
       publishedTime,
       modifiedTime,
       section,
@@ -110,11 +110,11 @@ export function generateMetadata(config: SEOConfig): Metadata {
       },
     },
     verification: {
-      google: process.env.GOOGLE_SITE_VERIFICATION,
-      yandex: process.env.YANDEX_VERIFICATION,
-      yahoo: process.env.YAHOO_VERIFICATION,
+      ...(process.env.GOOGLE_SITE_VERIFICATION && { google: process.env.GOOGLE_SITE_VERIFICATION }),
+      ...(process.env.YANDEX_VERIFICATION && { yandex: process.env.YANDEX_VERIFICATION }),
+      ...(process.env.YAHOO_VERIFICATION && { yahoo: process.env.YAHOO_VERIFICATION }),
       other: {
-        'msvalidate.01': process.env.BING_VERIFICATION,
+        ...(process.env.BING_VERIFICATION && { 'msvalidate.01': process.env.BING_VERIFICATION }),
       },
     },
   };

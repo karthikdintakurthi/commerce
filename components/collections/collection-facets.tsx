@@ -91,7 +91,13 @@ export function CollectionFacets({ searchParams }: CollectionFacetsProps) {
     // Reset to first page when filters change
     params.delete('page');
     
-    router.push(`?${params.toString()}`);
+    // Check if we're on a search page or collections page
+    const currentPath = window.location.pathname;
+    if (currentPath.startsWith('/search/')) {
+      router.push(`${currentPath}?${params.toString()}`);
+    } else {
+      router.push(`?${params.toString()}`);
+    }
   }, [currentSearchParams, getActiveFilters, router]);
 
   const clearAllFilters = useCallback(() => {
@@ -100,7 +106,13 @@ export function CollectionFacets({ searchParams }: CollectionFacetsProps) {
       params.delete(facet);
     });
     params.delete('page');
-    router.push(`?${params.toString()}`);
+    // Check if we're on a search page or collections page
+    const currentPath = window.location.pathname;
+    if (currentPath.startsWith('/search/')) {
+      router.push(`${currentPath}?${params.toString()}`);
+    } else {
+      router.push(`?${params.toString()}`);
+    }
   }, [currentSearchParams, router]);
 
   const hasActiveFilters = Object.keys(FACET_OPTIONS).some(facet => 

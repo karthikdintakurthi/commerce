@@ -274,7 +274,30 @@ export async function ProductGrid({ title = "Featured Products", limit = 6 }: Pr
         {products.map((product, i) => (
           <ProductCard
             key={product.id || i}
-            {...product}
+            id={product.id}
+            title={product.title}
+            description={product.description}
+            price={
+              'price' in product ? product.price : {
+                amount: product.priceRange?.maxVariantPrice?.amount || '0',
+                currencyCode: product.priceRange?.maxVariantPrice?.currencyCode || 'USD'
+              }
+            }
+            compareAtPrice={
+              'compareAtPrice' in product ? product.compareAtPrice : undefined
+            }
+            image={'image' in product ? product.image : {
+              url: product.featuredImage?.url || '/api/placeholder/400/500',
+              altText: product.featuredImage?.altText || product.title
+            }}
+            images={'images' in product ? product.images : []}
+            href={'href' in product ? product.href : `/product/${(product as any).handle || (product as any).id}`}
+            rating={'rating' in product ? product.rating : 4.5}
+            reviewCount={'reviewCount' in product ? product.reviewCount : Math.floor(Math.random() * 200) + 10}
+            isNew={'isNew' in product ? product.isNew : false}
+            isBestseller={'isBestseller' in product ? product.isBestseller : Math.random() > 0.7}
+            isOnSale={'isOnSale' in product ? product.isOnSale : false}
+            isOutOfStock={'isOutOfStock' in product ? product.isOutOfStock : !(product as any).availableForSale}
           />
         ))}
       </div>

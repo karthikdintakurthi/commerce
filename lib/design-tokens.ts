@@ -288,7 +288,7 @@ export const themeVariants = {
     'muted-foreground': designTokens.colors.neutral[400],
     accent: designTokens.colors.accent[400],
     'accent-foreground': designTokens.colors.neutral[900],
-    destructive: designTokens.colors.error[400],
+    destructive: designTokens.colors.error[500],
     'destructive-foreground': designTokens.colors.neutral[50],
     border: designTokens.colors.neutral[800],
     input: designTokens.colors.neutral[800],

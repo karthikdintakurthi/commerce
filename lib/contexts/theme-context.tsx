@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
 
@@ -39,21 +39,21 @@ export function ThemeProvider({
   const [mounted, setMounted] = useState(false);
 
   // Get system theme preference
-  const getSystemTheme = (): 'light' | 'dark' => {
+  const getSystemTheme = useCallback((): 'light' | 'dark' => {
     if (typeof window === 'undefined') return 'light';
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  };
+  }, []);
 
   // Resolve theme based on current setting
-  const resolveTheme = (currentTheme: Theme): 'light' | 'dark' => {
+  const resolveTheme = useCallback((currentTheme: Theme): 'light' | 'dark' => {
     if (currentTheme === 'system' && enableSystem) {
       return getSystemTheme();
     }
     return currentTheme === 'light' ? 'light' : 'dark';
-  };
+  }, [enableSystem, getSystemTheme]);
 
   // Apply theme to document
-  const applyTheme = (newTheme: 'light' | 'dark') => {
+  const applyTheme = useCallback((newTheme: 'light' | 'dark') => {
     const root = document.documentElement;
     
     if (disableTransitionOnChange) {
@@ -80,7 +80,7 @@ export function ThemeProvider({
     } else {
       root.setAttribute(attribute, newTheme);
     }
-  };
+  }, [attribute, disableTransitionOnChange]);
 
   // Initialize theme from localStorage or system preference
   useEffect(() => {
@@ -95,10 +95,10 @@ export function ThemeProvider({
     applyTheme(resolved);
     
     setMounted(true);
-  }, [defaultTheme, storageKey, enableSystem]);
+  }, [defaultTheme, storageKey, enableSystem, resolveTheme, applyTheme]);
 
   // Handle theme changes
-  const handleSetTheme = (newTheme: Theme) => {
+  const handleSetTheme = useCallback((newTheme: Theme) => {
     setTheme(newTheme);
     const resolved = resolveTheme(newTheme);
     setResolvedTheme(resolved);
@@ -107,7 +107,7 @@ export function ThemeProvider({
     if (typeof window !== 'undefined') {
       localStorage.setItem(storageKey, newTheme);
     }
-  };
+  }, [resolveTheme, applyTheme, storageKey]);
 
   // Listen for system theme changes
   useEffect(() => {
@@ -122,11 +122,21 @@ export function ThemeProvider({
 
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [theme, enableSystem]);
+  }, [theme, enableSystem, resolveTheme, applyTheme]);
 
-  // Prevent hydration mismatch
+  // Prevent hydration mismatch by providing default values during SSR
   if (!mounted) {
-    return <>{children}</>;
+    return (
+      <ThemeContext.Provider
+        value={{
+          theme: defaultTheme,
+          setTheme: () => {}, // No-op during SSR
+          resolvedTheme: defaultTheme === 'system' ? 'light' : defaultTheme,
+        }}
+      >
+        {children}
+      </ThemeContext.Provider>
+    );
   }
 
   return (

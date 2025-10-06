@@ -158,8 +158,12 @@ export default function ProductComponentsDemoPage() {
       </Section>
 
       {/* ProductCard Examples */}
-      <Section title="ProductCard Examples" description="Various product card configurations" divider="bottom">
+      <Section showDivider dividerPosition="bottom">
         <Container>
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold font-display mb-4">ProductCard Examples</h2>
+            <p className="text-muted-foreground">Various product card configurations</p>
+          </div>
           <Grid columns="auto-fit" minItemWidth="280px" gap="lg">
             {sampleProducts.map((product) => (
               <GridItem key={product.id}>
@@ -176,8 +180,12 @@ export default function ProductComponentsDemoPage() {
       </Section>
 
       {/* ProductGallery Example */}
-      <Section title="ProductGallery Example" description="PDP gallery with thumbnails, zoom, and video support" divider="bottom">
+      <Section showDivider dividerPosition="bottom">
         <Container>
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold font-display mb-4">ProductGallery Example</h2>
+            <p className="text-muted-foreground">PDP gallery with thumbnails, zoom, and video support</p>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Gallery */}
             <div>
@@ -243,8 +251,12 @@ export default function ProductComponentsDemoPage() {
       </Section>
 
       {/* Features */}
-      <Section title="Component Features" description="Key features and capabilities" divider="bottom">
+      <Section showDivider dividerPosition="bottom">
         <Container>
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold font-display mb-4">Component Features</h2>
+            <p className="text-muted-foreground">Key features and capabilities</p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="p-6 bg-card rounded-lg border">
               <h3 className="text-xl font-semibold mb-2">Motion Safety</h3>
@@ -287,8 +299,12 @@ export default function ProductComponentsDemoPage() {
       </Section>
 
       {/* Usage Examples */}
-      <Section title="Usage Examples" description="Code examples for implementation">
+      <Section>
         <Container>
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold font-display mb-4">Usage Examples</h2>
+            <p className="text-muted-foreground">Code examples for implementation</p>
+          </div>
           <div className="space-y-8">
             <div>
               <h3 className="text-xl font-semibold mb-4">ProductCard Usage</h3>

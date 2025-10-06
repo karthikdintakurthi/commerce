@@ -58,19 +58,17 @@ export async function ProductCrossSell({ product }: ProductCrossSellProps) {
                 altText: relatedProduct.featuredImage?.altText || relatedProduct.images?.[0]?.altText || relatedProduct.title,
                 isVideo: relatedProduct.featuredImage?.isVideo || relatedProduct.images?.[0]?.isVideo || false,
                 videoUrl: relatedProduct.featuredImage?.videoUrl || relatedProduct.images?.[0]?.videoUrl,
-                videoDuration: relatedProduct.featuredImage?.videoDuration || relatedProduct.images?.[0]?.videoDuration
               }}
               images={relatedProduct.images?.slice(0, 3).map(img => ({
                 url: img.url,
                 altText: img.altText || relatedProduct.title,
                 isVideo: img.isVideo || false,
                 videoUrl: img.videoUrl,
-                videoDuration: img.videoDuration
               })) || []}
               href={`/products/${relatedProduct.handle}`}
               rating={4.5}
               reviewCount={Math.floor(Math.random() * 200) + 10}
-              isNew={relatedProduct.createdAt && new Date(relatedProduct.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)}
+              isNew={false}
               isBestseller={Math.random() > 0.7}
               isOnSale={relatedProduct.priceRange.minVariantPrice.amount !== relatedProduct.priceRange.maxVariantPrice.amount}
               isOutOfStock={!relatedProduct.availableForSale}

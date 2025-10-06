@@ -24,7 +24,7 @@ const SORT_OPTIONS = [
   { value: 'title_desc', label: 'Name: Z to A' }
 ];
 
-export function CollectionProducts({ collectionHandle, searchParams, initialProducts = [] }: CollectionProductsProps) {
+export function CollectionProductsClient({ collectionHandle, searchParams, initialProducts = [] }: CollectionProductsProps) {
   const router = useRouter();
   const currentSearchParams = useSearchParams();
   const [showMobileFilters, setShowMobileFilters] = useState(false);

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, type Variants } from 'framer-motion';
+import { motion, type Variant, type Variants } from 'framer-motion';
 import * as React from 'react';
 
 // Motion-safe variants that respect prefers-reduced-motion
@@ -183,13 +183,14 @@ export function getMotionVariants(variants: Variants, prefersReducedMotion: bool
     // Return reduced motion variants
     const reducedVariants: Variants = {};
     Object.keys(variants).forEach(key => {
-      if (variants[key] && typeof variants[key] === 'object' && 'reduced' in variants[key]) {
-        reducedVariants[key] = variants[key].reduced;
+      const variant = variants[key];
+      if (variant && typeof variant === 'object' && 'reduced' in variant) {
+        reducedVariants[key] = (variant as any).reduced;
       } else {
         reducedVariants[key] = {
-          ...variants[key],
+          ...variant,
           transition: { duration: 0.1 }
-        };
+        } as Variant;
       }
     });
     return reducedVariants;

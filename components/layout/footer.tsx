@@ -70,7 +70,7 @@ export default function FooterClient({ menu }: FooterClientProps) {
     <footer className="border-t bg-background">
       {/* Main Footer Content */}
       <Container className="py-12">
-        <Grid cols={1} gap={8} responsive={{ md: 2, lg: 4 }}>
+        <Grid columns="auto-fit" minItemWidth="250px" gap="lg">
           {/* Brand Section */}
           <div className="space-y-4">
             <Link className="flex items-center space-x-2" href="/">

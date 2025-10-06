@@ -70,10 +70,10 @@ export function AnnouncementBar() {
                   className="text-center"
                 >
                   <a
-                    href={announcements[currentIndex].href}
+                    href={announcements[currentIndex]?.href || '#'}
                     className="text-sm font-medium text-foreground hover:text-chip-gold transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-chip-gold focus:ring-offset-2 rounded-sm"
                   >
-                    {announcements[currentIndex].message}
+                    {announcements[currentIndex]?.message || ''}
                   </a>
                 </motion.div>
               </AnimatePresence>

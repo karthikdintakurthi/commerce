@@ -75,7 +75,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {/* JSON-LD Schema */}
       <ProductJsonLd product={product} />
       
-      <ProductProvider product={product}>
+      <ProductProvider>
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           {/* Above the fold section */}
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">

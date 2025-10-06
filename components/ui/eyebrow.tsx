@@ -48,10 +48,26 @@ const Eyebrow = React.forwardRef<HTMLElement, EyebrowProps>(
       }
     } : {};
 
-    const ComponentElement = animate ? motion.span : Component;
+    if (animate) {
+      return React.createElement(
+        motion.span,
+        {
+          ref: ref as any,
+          className: cn(
+            'block font-medium tracking-wide uppercase',
+            sizeClasses[size],
+            variantClasses[variant],
+            className
+          ),
+          ...motionProps,
+          ...(props as any)
+        },
+        children
+      );
+    }
 
     return React.createElement(
-      ComponentElement,
+      Component,
       {
         ref: ref as any,
         className: cn(
@@ -60,7 +76,6 @@ const Eyebrow = React.forwardRef<HTMLElement, EyebrowProps>(
           variantClasses[variant],
           className
         ),
-        ...(animate ? motionProps : {}),
         ...props
       },
       children

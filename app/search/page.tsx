@@ -31,15 +31,15 @@ export default async function SearchPage(props: {
     return (
       <div className="mx-auto max-w-screen-2xl px-4 py-12">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          <h1 className="text-2xl font-bold text-foreground mb-4">
             Search Demo
           </h1>
-          <p className="text-gray-600 mb-4">
+          <p className="text-muted-foreground mb-4">
             Search functionality requires Shopify configuration.
           </p>
           {searchValue && (
-            <p className="text-sm text-gray-500">
-              You searched for: <span className="font-bold">&quot;{searchValue}&quot;</span>
+            <p className="text-sm text-muted-foreground">
+              You searched for: <span className="font-bold text-foreground">&quot;{searchValue}&quot;</span>
             </p>
           )}
         </div>
@@ -50,18 +50,18 @@ export default async function SearchPage(props: {
   return (
     <div className="mx-auto max-w-screen-2xl px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        <h1 className="text-3xl font-bold text-foreground mb-4">
           {searchValue ? `Search Results` : `All Products`}
         </h1>
         
         {searchValue ? (
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-muted-foreground">
             {products.length === 0
               ? `No products found for "${searchValue}"`
               : `Found ${products.length} ${resultsText} for "${searchValue}"`}
           </p>
         ) : (
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-muted-foreground">
             Browse our complete collection of premium jewelry and accessories
           </p>
         )}
@@ -74,10 +74,10 @@ export default async function SearchPage(props: {
       ) : (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">🔍</div>
-          <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+          <h2 className="text-2xl font-semibold text-foreground mb-2">
             {searchValue ? 'No products found' : 'No products available'}
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-muted-foreground mb-6">
             {searchValue 
               ? `Try searching for something else or browse all products.`
               : `Check back soon for new arrivals!`
@@ -86,7 +86,7 @@ export default async function SearchPage(props: {
           {searchValue && (
             <a 
               href="/search" 
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+              className="inline-block bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-lg font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
             >
               View All Products
             </a>

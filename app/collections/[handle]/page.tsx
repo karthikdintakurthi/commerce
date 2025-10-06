@@ -33,19 +33,14 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
       openGraph: {
         title: collection.title,
         description: collection.description || `Shop our ${collection.title} collection`,
-        images: collection.image ? [{
-          url: collection.image.url,
-          alt: collection.image.altText || collection.title,
-          width: collection.image.width,
-          height: collection.image.height
-        }] : [],
+        images: [],
         type: 'website'
       },
       twitter: {
         card: 'summary_large_image',
         title: collection.title,
         description: collection.description || `Shop our ${collection.title} collection`,
-        images: collection.image?.url
+        images: []
       }
     };
   } catch (error) {

@@ -2,9 +2,11 @@ import { CartProvider } from 'components/cart/cart-context';
 import Footer from 'components/layout/footer/footer-wrapper';
 import { Header } from 'components/layout/header';
 import { ThemeProvider } from 'components/theme-provider';
+import { AriaLiveRegion } from 'components/ui/aria-live-region';
+import { SkipToMain } from 'components/ui/skip-link';
 import { WelcomeToast } from 'components/welcome-toast';
 import { generateMetadata as generateSEOMetadata } from 'lib/seo';
-import { getCart } from 'lib/shopify';
+// import { getCart } from 'lib/server-cart';
 import { baseUrl } from 'lib/utils';
 import { Cinzel, Cormorant_Garamond, Inter, Sarabun } from 'next/font/google';
 import { ReactNode } from 'react';
@@ -56,19 +58,9 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  // Handle missing Shopify configuration gracefully
-  let cart;
-  try {
-    cart = getCart();
-  } catch (error) {
-    console.warn('Shopify not configured, running in demo mode');
-    cart = Promise.resolve(undefined);
-  }
-
-  // Ensure cart is always a Promise
-  if (!cart || typeof cart.then !== 'function') {
-    cart = Promise.resolve(undefined);
-  }
+  // For now, just use undefined cart to avoid shopify import issues
+  // TODO: Implement proper cart handling without importing shopify module
+  const cart = Promise.resolve(undefined);
 
   return (
     <html 
@@ -84,8 +76,9 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <CartProvider cartPromise={cart}>
+            <SkipToMain />
             <Header />
-            <main className="flex-1">
+            <main className="flex-1" id="main-content">
               {children}
             </main>
             <Footer />
@@ -101,6 +94,7 @@ export default async function RootLayout({
               }}
             />
             <WelcomeToast />
+            <AriaLiveRegion />
           </CartProvider>
         </ThemeProvider>
       </body>

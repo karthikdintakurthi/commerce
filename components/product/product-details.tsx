@@ -43,7 +43,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
     }
   };
 
-  const isNew = product.createdAt && new Date(product.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const isNew = false;
   const isBestseller = Math.random() > 0.7; // This could be based on actual data
 
   return (

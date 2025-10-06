@@ -41,10 +41,25 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
       }
     } : {};
 
-    const ComponentElement = animate ? motion.div : Component;
+    if (animate) {
+      return React.createElement(
+        motion.div,
+        {
+          ref,
+          className: cn(
+            'mx-auto w-full px-4 sm:px-6 lg:px-8',
+            sizeClasses[size],
+            className
+          ),
+          ...motionProps,
+          ...(props as any)
+        },
+        children
+      );
+    }
 
     return React.createElement(
-      ComponentElement,
+      Component,
       {
         ref,
         className: cn(
@@ -52,7 +67,6 @@ const Container = React.forwardRef<HTMLDivElement, ContainerProps>(
           sizeClasses[size],
           className
         ),
-        ...(animate ? motionProps : {}),
         ...props
       },
       children

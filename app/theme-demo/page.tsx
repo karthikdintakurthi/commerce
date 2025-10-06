@@ -43,7 +43,22 @@ export default function ThemeDemo() {
     );
   }
 
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const themeContext = useTheme();
+  
+  if (!themeContext) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Loading...</h1>
+          <p className="text-muted-foreground">
+            Theme context not available
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const { theme, setTheme, resolvedTheme } = themeContext;
 
   const themeOptions = [
     { value: 'light', label: 'Light', icon: Sun, description: 'Clean and bright interface' },

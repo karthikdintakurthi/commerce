@@ -76,10 +76,28 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(
       }
     } : {};
 
-    const ComponentElement = animate ? motion.section : Component;
+    if (animate) {
+      return React.createElement(
+        motion.section,
+        {
+          ref: ref as any,
+          className: cn(
+            'w-full',
+            sizeClasses[size],
+            variantClasses[variant],
+            backgroundClasses[background],
+            showDivider && dividerClasses[dividerPosition],
+            className
+          ),
+          ...motionProps,
+          ...(props as any)
+        },
+        children
+      );
+    }
 
     return React.createElement(
-      ComponentElement,
+      Component,
       {
         ref: ref as any,
         className: cn(
@@ -90,7 +108,6 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(
           showDivider && dividerClasses[dividerPosition],
           className
         ),
-        ...(animate ? motionProps : {}),
         ...props
       },
       children

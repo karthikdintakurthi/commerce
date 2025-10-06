@@ -61,10 +61,29 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
       }
     } : {};
 
-    const ComponentElement = animate ? motion.div : Component;
+    if (animate) {
+      return React.createElement(
+        motion.div,
+        {
+          ref,
+          className: cn(
+            'grid w-full',
+            gapClasses[gap],
+            className
+          ),
+          style: {
+            gridTemplateColumns: getGridTemplateColumns(),
+            ...props.style
+          },
+          ...motionProps,
+          ...(props as any)
+        },
+        children
+      );
+    }
 
     return React.createElement(
-      ComponentElement,
+      Component,
       {
         ref,
         className: cn(
@@ -76,7 +95,6 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
           gridTemplateColumns: getGridTemplateColumns(),
           ...props.style
         },
-        ...(animate ? motionProps : {}),
         ...props
       },
       children
@@ -125,21 +143,32 @@ const GridItem = React.forwardRef<HTMLDivElement, GridItemProps>(
       animate: 'visible'
     } : {};
 
-    const ComponentElement = animate ? motion.div : Component;
-
     const gridStyle = {
       gridColumn: span ? `span ${span}` : undefined,
       gridColumnStart: start,
       gridColumnEnd: end,
     };
 
+    if (animate) {
+      return React.createElement(
+        motion.div,
+        {
+          ref,
+          className: cn('w-full', className),
+          style: gridStyle,
+          ...motionProps,
+          ...(props as any)
+        },
+        children
+      );
+    }
+
     return React.createElement(
-      ComponentElement,
+      Component,
       {
         ref,
         className: cn('w-full', className),
         style: gridStyle,
-        ...(animate ? motionProps : {}),
         ...props
       },
       children

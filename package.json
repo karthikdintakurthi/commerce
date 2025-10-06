@@ -1,12 +1,15 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
+    "dev:turbo": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
-    "test": "pnpm prettier:check"
+    "test": "pnpm prettier:check",
+    "test:a11y": "playwright test tests/a11y-keyboard-navigation.spec.ts",
+    "test:a11y:headed": "playwright test tests/a11y-keyboard-navigation.spec.ts --headed"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -56,6 +59,7 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.55.1",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/postcss": "^4.0.14",
     "@tailwindcss/typography": "^0.5.16",

@@ -1,6 +1,6 @@
 import { ProductCard } from '@/components/ui';
 import Grid from 'components/grid';
-import { Product } from 'lib/shopify/types';
+import { Product } from 'lib/types';
 
 export default function ProductGridItems({ products }: { products: Product[] }) {
   return (
@@ -28,20 +28,18 @@ export default function ProductGridItems({ products }: { products: Product[] }) 
                 url: featuredImage?.url || '/api/placeholder/400/500',
                 altText: featuredImage?.altText || product.title,
                 isVideo: featuredImage?.isVideo || false,
-                videoUrl: featuredImage?.videoUrl,
-                videoDuration: featuredImage?.videoDuration
+                videoUrl: featuredImage?.videoUrl
               }}
               images={product.images?.slice(0, 3).map(img => ({
                 url: img.url,
                 altText: img.altText || product.title,
                 isVideo: img.isVideo || false,
-                videoUrl: img.videoUrl,
-                videoDuration: img.videoDuration
+                videoUrl: img.videoUrl
               })) || []}
               href={`/product/${product.handle}`}
               rating={4.5} // Default rating
               reviewCount={Math.floor(Math.random() * 200) + 10}
-              isNew={product.createdAt && new Date(product.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)}
+              isNew={false}
               isBestseller={Math.random() > 0.7}
               isOnSale={product.priceRange.minVariantPrice.amount !== product.priceRange.maxVariantPrice.amount}
               isOutOfStock={!product.availableForSale}

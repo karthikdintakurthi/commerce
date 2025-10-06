@@ -3,33 +3,33 @@
 @layer base {
   :root {
     /* Light theme - Core colors */
-    --background: #F9F6F1;
-    --foreground: #111114;
-    --card: #FFFFFF;
-    --card-foreground: #111114;
-    --popover: #FFFFFF;
-    --popover-foreground: #111114;
-    --primary: #0F6C5B;
-    --primary-foreground: #FFFFFF;
-    --secondary: #7A8D79;
-    --secondary-foreground: #FFFFFF;
-    --muted: #D7C7A0;
-    --muted-foreground: #7A8D79;
-    --accent: #C59B2A;
-    --accent-foreground: #111114;
-    --destructive: #A0203C;
-    --destructive-foreground: #FFFFFF;
-    --border: #D7C7A0;
-    --input: #D7C7A0;
-    --ring: #0F6C5B;
+    --background: 42 25% 96%;
+    --foreground: 240 11% 7%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 11% 7%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 11% 7%;
+    --primary: 174 73% 23%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 120 14% 42%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 45 40% 73%;
+    --muted-foreground: 120 14% 42%;
+    --accent: 45 64% 46%;
+    --accent-foreground: 240 11% 7%;
+    --destructive: 344 63% 35%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 45 40% 73%;
+    --input: 45 40% 73%;
+    --ring: 45 64% 46%;
     --radius: 0.5rem;
 
     /* Jewelry semantic colors */
-    --chip-emerald: #0F6C5B;
-    --chip-ruby: #A0203C;
-    --chip-gold: #C59B2A;
-    --chip-sage: #7A8D79;
-    --chip-sand: #D7C7A0;
+    --chip-emerald: 174 73% 23%;
+    --chip-ruby: 344 63% 35%;
+    --chip-gold: 45 64% 46%;
+    --chip-sage: 120 14% 42%;
+    --chip-sand: 45 40% 73%;
 
     /* Typography scale */
     --font-size-xs: 0.75rem;
@@ -148,32 +148,32 @@
 
   .dark {
     /* Dark theme - Core colors */
-    --background: #111114;
-    --foreground: #F9F6F1;
-    --card: #1A1A1D;
-    --card-foreground: #F9F6F1;
-    --popover: #1A1A1D;
-    --popover-foreground: #F9F6F1;
-    --primary: #0F6C5B;
-    --primary-foreground: #FFFFFF;
-    --secondary: #7A8D79;
-    --secondary-foreground: #FFFFFF;
-    --muted: #2A2A2D;
-    --muted-foreground: #7A8D79;
-    --accent: #C59B2A;
-    --accent-foreground: #111114;
-    --destructive: #A0203C;
-    --destructive-foreground: #FFFFFF;
-    --border: #2A2A2D;
-    --input: #2A2A2D;
-    --ring: #0F6C5B;
+    --background: 240 11% 7%;
+    --foreground: 42 25% 96%;
+    --card: 240 11% 10%;
+    --card-foreground: 42 25% 96%;
+    --popover: 240 11% 10%;
+    --popover-foreground: 42 25% 96%;
+    --primary: 174 73% 23%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 120 14% 42%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 11% 16%;
+    --muted-foreground: 120 14% 42%;
+    --accent: 45 64% 46%;
+    --accent-foreground: 240 11% 7%;
+    --destructive: 344 63% 35%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 11% 16%;
+    --input: 240 11% 16%;
+    --ring: 45 64% 46%;
 
     /* Jewelry semantic colors remain the same */
-    --chip-emerald: #0F6C5B;
-    --chip-ruby: #A0203C;
-    --chip-gold: #C59B2A;
-    --chip-sage: #7A8D79;
-    --chip-sand: #D7C7A0;
+    --chip-emerald: 174 73% 23%;
+    --chip-ruby: 344 63% 35%;
+    --chip-gold: 45 64% 46%;
+    --chip-sage: 120 14% 42%;
+    --chip-sand: 45 40% 73%;
   }
 
   *,
@@ -203,6 +203,7 @@
   *:focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
+    border-radius: 0.25rem;
   }
 
   /* Selection styles */
@@ -249,7 +250,17 @@ input,
 button,
 [role="button"],
 [role="link"] {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2;
+}
+
+/* Subtle focus ring for interactive elements */
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  @apply focus-visible:ring-[var(--accent)]/60 focus-visible:ring-2 focus-visible:ring-offset-2;
 }
 
 /* Reduced motion preferences */
@@ -269,12 +280,106 @@ button,
   :root {
     --border: 0 0% 0%;
     --ring: 0 0% 0%;
+    
+    /* High contrast jewelry colors */
+    --chip-emerald-text-light: 0 0% 0%;
+    --chip-emerald-text-dark: 0 0% 100%;
+    --chip-ruby-text-light: 0 0% 100%;
+    --chip-ruby-text-dark: 0 0% 100%;
+    --chip-gold-text-light: 0 0% 0%;
+    --chip-gold-text-dark: 0 0% 0%;
+    --chip-sage-text-light: 0 0% 100%;
+    --chip-sage-text-dark: 0 0% 100%;
+    --chip-sand-text-light: 0 0% 0%;
+    --chip-sand-text-dark: 0 0% 0%;
   }
   
   .dark {
     --border: 0 0% 100%;
     --ring: 0 0% 100%;
   }
+  
+  /* High contrast text on jewelry backgrounds */
+  .bg-chip-emerald {
+    color: hsl(var(--chip-emerald-text-light));
+  }
+  
+  .bg-chip-ruby {
+    color: hsl(var(--chip-ruby-text-light));
+  }
+  
+  .bg-chip-gold {
+    color: hsl(var(--chip-gold-text-light));
+  }
+  
+  .bg-chip-sage {
+    color: hsl(var(--chip-sage-text-light));
+  }
+  
+  .bg-chip-sand {
+    color: hsl(var(--chip-sand-text-light));
+  }
+  
+  .dark .bg-chip-emerald {
+    color: hsl(var(--chip-emerald-text-dark));
+  }
+  
+  .dark .bg-chip-ruby {
+    color: hsl(var(--chip-ruby-text-dark));
+  }
+  
+  .dark .bg-chip-gold {
+    color: hsl(var(--chip-gold-text-dark));
+  }
+  
+  .dark .bg-chip-sage {
+    color: hsl(var(--chip-sage-text-dark));
+  }
+  
+  .dark .bg-chip-sand {
+    color: hsl(var(--chip-sand-text-dark));
+  }
+}
+
+/* Enhanced contrast for jewelry color combinations */
+.text-on-emerald {
+  color: hsl(0 0% 0%);
+}
+
+.text-on-ruby {
+  color: hsl(0 0% 100%);
+}
+
+.text-on-gold {
+  color: hsl(0 0% 0%);
+}
+
+.text-on-sage {
+  color: hsl(0 0% 100%);
+}
+
+.text-on-sand {
+  color: hsl(0 0% 0%);
+}
+
+.dark .text-on-emerald {
+  color: hsl(0 0% 100%);
+}
+
+.dark .text-on-ruby {
+  color: hsl(0 0% 100%);
+}
+
+.dark .text-on-gold {
+  color: hsl(0 0% 0%);
+}
+
+.dark .text-on-sage {
+  color: hsl(0 0% 100%);
+}
+
+.dark .text-on-sand {
+  color: hsl(0 0% 0%);
 }
 
 /* Print styles */

@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import Link from 'next/link'
 import { FeaturedProducts } from 'lib/sanity/client'
 import { urlFor } from 'lib/sanity/image-url'
 import { ProductCard } from '@/components/ui'
@@ -48,7 +49,7 @@ export function FeaturedProductsBlock({ block }: FeaturedProductsBlockProps) {
           {block.products.map((product, index) => (
             <ProductCard
               key={index}
-              id={product.id || index.toString()}
+              id={product.shopifyProductHandle || index.toString()}
               title={product.title}
               description={product.description}
               price={{
@@ -68,9 +69,9 @@ export function FeaturedProductsBlock({ block }: FeaturedProductsBlockProps) {
               images={product.images?.slice(1, 4).map(img => ({
                 url: urlFor(img).width(400).height(500).url(),
                 altText: img.alt || product.title,
-                isVideo: img.isVideo || false,
-                videoUrl: img.videoUrl,
-                videoDuration: img.videoDuration
+                isVideo: false,
+                videoUrl: undefined,
+                videoDuration: undefined
               })) || []}
               href={product.url}
               rating={4.5} // Default rating

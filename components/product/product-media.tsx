@@ -134,7 +134,7 @@ export function ProductMedia({
 
 // Utility function to get the first media item (image or video)
 export function getFirstMediaItem(media: Media[]): Media | null {
-  return media.length > 0 ? media[0] : null;
+  return media.length > 0 ? media[0]! : null;
 }
 
 // Utility function to get all images from media array

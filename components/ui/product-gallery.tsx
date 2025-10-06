@@ -72,11 +72,11 @@ const ProductGallery = React.forwardRef<HTMLDivElement, ProductGalleryProps>(
     // Touch/swipe handling
     const handleTouchStart = (e: React.TouchEvent) => {
       setTouchEnd(null);
-      setTouchStart(e.targetTouches[0].clientX);
+      setTouchStart(e.targetTouches[0]?.clientX || 0);
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
-      setTouchEnd(e.targetTouches[0].clientX);
+      setTouchEnd(e.targetTouches[0]?.clientX || 0);
     };
 
     const handleTouchEnd = () => {
@@ -165,8 +165,8 @@ const ProductGallery = React.forwardRef<HTMLDivElement, ProductGalleryProps>(
               </div>
             ) : (
               <Image
-                src={currentImage.url}
-                alt={currentImage.altText || `Product image ${currentIndex + 1}`}
+                src={currentImage?.url || '/api/placeholder/800/800'}
+                alt={currentImage?.altText || `Product image ${currentIndex + 1}`}
                 fill
                 className={cn(
                   'object-cover transition-transform duration-300',
@@ -272,8 +272,8 @@ const ProductGallery = React.forwardRef<HTMLDivElement, ProductGalleryProps>(
             >
               <div className="relative max-w-4xl max-h-[90vh] w-full h-full">
                 <Image
-                  src={currentImage.url}
-                  alt={currentImage.altText || `Product image ${currentIndex + 1}`}
+                  src={currentImage?.url || '/api/placeholder/800/800'}
+                  alt={currentImage?.altText || `Product image ${currentIndex + 1}`}
                   fill
                   className="object-contain"
                   sizes="100vw"
