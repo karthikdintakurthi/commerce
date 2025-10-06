@@ -1,8 +1,8 @@
+import { ProductCard } from '@/components/ui'
 import clsx from 'clsx'
-import Link from 'next/link'
 import { FeaturedProducts } from 'lib/sanity/client'
 import { urlFor } from 'lib/sanity/image-url'
-import { ProductCard } from '@/components/ui'
+import Link from 'next/link'
 
 interface FeaturedProductsBlockProps {
   block: FeaturedProducts
@@ -75,7 +75,7 @@ export function FeaturedProductsBlock({ block }: FeaturedProductsBlockProps) {
               })) || []}
               href={product.url}
               rating={4.5} // Default rating
-              reviewCount={Math.floor(Math.random() * 200) + 10}
+              reviewCount={127}
               isNew={product.tags?.includes('new') || false}
               isBestseller={product.tags?.includes('bestseller') || false}
               isOnSale={block.showSalePrices && product.isOnSale}

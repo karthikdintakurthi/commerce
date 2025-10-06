@@ -1,5 +1,5 @@
-import { getProducts } from 'lib/shopify';
 import { ProductCard } from '@/components/ui';
+import { getProducts } from 'lib/shopify';
 
 // Demo products for when Shopify is not configured
 const demoProducts = [
@@ -233,9 +233,9 @@ export async function ProductGrid({ title = "Featured Products", limit = 6 }: Pr
       })) || [],
       href: `/product/${product.handle}`,
       rating: 4.5, // Default rating for demo
-      reviewCount: Math.floor(Math.random() * 200) + 10,
-      isNew: product.createdAt && new Date(product.createdAt) > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-      isBestseller: Math.random() > 0.7,
+      reviewCount: 127,
+      isNew: false,
+      isBestseller: false,
       isOnSale: product.priceRange?.minVariantPrice?.amount !== product.priceRange?.maxVariantPrice?.amount,
       isOutOfStock: false
     }));
@@ -293,9 +293,9 @@ export async function ProductGrid({ title = "Featured Products", limit = 6 }: Pr
             images={'images' in product ? product.images : []}
             href={'href' in product ? product.href : `/product/${(product as any).handle || (product as any).id}`}
             rating={'rating' in product ? product.rating : 4.5}
-            reviewCount={'reviewCount' in product ? product.reviewCount : Math.floor(Math.random() * 200) + 10}
+            reviewCount={'reviewCount' in product ? product.reviewCount : 127}
             isNew={'isNew' in product ? product.isNew : false}
-            isBestseller={'isBestseller' in product ? product.isBestseller : Math.random() > 0.7}
+            isBestseller={'isBestseller' in product ? product.isBestseller : false}
             isOnSale={'isOnSale' in product ? product.isOnSale : false}
             isOutOfStock={'isOutOfStock' in product ? product.isOutOfStock : !(product as any).availableForSale}
           />

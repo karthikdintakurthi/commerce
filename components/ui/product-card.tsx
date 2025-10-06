@@ -174,7 +174,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                 </Badge>
               )}
               {isBestseller && (
-                <Badge variant="secondary" className="text-xs bg-chip-gold text-white">
+                <Badge variant="gold" className="text-xs">
                   Bestseller
                 </Badge>
               )}
@@ -287,7 +287,7 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                         {/* Product Info */}
                         <div className="space-y-2">
                           <div className="flex items-center gap-2">
-                            <span className="text-2xl font-bold">
+                            <span className="text-2xl font-bold text-foreground">
                               {formatPrice(parseFloat(price.amount), { currency: price.currencyCode })}
                             </span>
                             {isDiscounted && (
@@ -305,8 +305,8 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                                     className={cn(
                                       'h-4 w-4',
                                       i < Math.floor(rating)
-                                        ? 'fill-yellow-400 text-yellow-400'
-                                        : 'text-gray-300'
+                                        ? 'fill-yellow-500 text-yellow-500'
+                                        : 'text-muted-foreground/30'
                                     )}
                                   />
                                 ))}
@@ -386,8 +386,8 @@ const ProductCard = React.forwardRef<HTMLDivElement, ProductCardProps>(
                       className={cn(
                         'h-3 w-3',
                         i < Math.floor(rating)
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'text-gray-300'
+                          ? 'fill-yellow-500 text-yellow-500'
+                          : 'text-muted-foreground/30'
                       )}
                     />
                   ))}

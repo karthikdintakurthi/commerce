@@ -98,6 +98,17 @@ export function getHighContrastTextColor(
     }
   }
   
+  // If no color meets AA standard, return the one with highest contrast anyway
+  if (bestRatio < CONTRAST_RATIOS.AA_NORMAL) {
+    for (const textColor of textOptions) {
+      const ratio = getContrastRatio(textColor, bgColor);
+      if (ratio > bestRatio) {
+        bestRatio = ratio;
+        bestColor = textColor;
+      }
+    }
+  }
+  
   return bestColor;
 }
 
@@ -149,4 +160,59 @@ export function generateHighContrastCSS(): string {
   });
   
   return cssVars.join('\n');
+}
+
+// Validate all jewelry color combinations
+export function validateAllJewelryContrasts(): {
+  [key: string]: {
+    light: { ratio: number; meetsStandard: boolean; textColor: string };
+    dark: { ratio: number; meetsStandard: boolean; textColor: string };
+  };
+} {
+  const results: any = {};
+  
+  Object.entries(JEWELRY_COLORS).forEach(([colorName, colorValue]) => {
+    const lightTextColor = getHighContrastTextColor(colorName as keyof typeof JEWELRY_COLORS, 'light');
+    const darkTextColor = getHighContrastTextColor(colorName as keyof typeof JEWELRY_COLORS, 'dark');
+    
+    results[colorName] = {
+      light: {
+        ...validateColorContrast(lightTextColor, colorValue),
+        textColor: lightTextColor,
+      },
+      dark: {
+        ...validateColorContrast(darkTextColor, colorValue),
+        textColor: darkTextColor,
+      },
+    };
+  });
+  
+  return results;
+}
+
+// Get recommended text color for any jewelry background
+export function getRecommendedTextColor(
+  backgroundColor: keyof typeof JEWELRY_COLORS,
+  theme: 'light' | 'dark' = 'light'
+): {
+  color: string;
+  className: string;
+  ratio: number;
+  meetsStandard: boolean;
+} {
+  const bgColor = JEWELRY_COLORS[backgroundColor];
+  const textColor = getHighContrastTextColor(backgroundColor, theme);
+  const contrast = validateColorContrast(textColor, bgColor);
+  
+  // Map to Tailwind classes
+  const className = textColor === TEXT_COLORS.white || textColor === TEXT_COLORS.light 
+    ? 'text-white' 
+    : 'text-foreground';
+  
+  return {
+    color: textColor,
+    className,
+    ratio: contrast.ratio,
+    meetsStandard: contrast.meetsStandard,
+  };
 }

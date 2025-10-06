@@ -44,7 +44,7 @@ export function ProductDetails({ product }: ProductDetailsProps) {
   };
 
   const isNew = false;
-  const isBestseller = Math.random() > 0.7; // This could be based on actual data
+  const isBestseller = false; // This could be based on actual product data
 
   return (
     <div className="space-y-6">

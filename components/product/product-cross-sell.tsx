@@ -67,9 +67,9 @@ export async function ProductCrossSell({ product }: ProductCrossSellProps) {
               })) || []}
               href={`/products/${relatedProduct.handle}`}
               rating={4.5}
-              reviewCount={Math.floor(Math.random() * 200) + 10}
+              reviewCount={127}
               isNew={false}
-              isBestseller={Math.random() > 0.7}
+              isBestseller={false}
               isOnSale={relatedProduct.priceRange.minVariantPrice.amount !== relatedProduct.priceRange.maxVariantPrice.amount}
               isOutOfStock={!relatedProduct.availableForSale}
             />

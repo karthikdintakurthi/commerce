@@ -1,20 +1,20 @@
 'use client';
 
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { NavbarThemeToggle } from '@/components/layout/navbar/navbar-theme-toggle';
-import { MobileSheet } from '@/components/layout/mobile-sheet';
+import CartModal from '@/components/cart/modal';
 import { AnnouncementBar } from '@/components/layout/announcement-bar';
-import { 
-  Search, 
-  ShoppingCart, 
-  Heart,
-  User,
-  ChevronDown
+import { MobileSheet } from '@/components/layout/mobile-sheet';
+import { NavbarThemeToggle } from '@/components/layout/navbar/navbar-theme-toggle';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import {
+    ChevronDown,
+    Heart,
+    Search,
+    User
 } from 'lucide-react';
-import { useState } from 'react';
 import Link from 'next/link';
+import { useState } from 'react';
 
 const categories = [
   { name: 'Necklaces', href: '/search?q=necklaces' },
@@ -30,7 +30,6 @@ interface HeaderProps {
 
 export function Header({ className }: HeaderProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [cartItems, setCartItems] = useState(3); // Mock cart count
   const [wishlistItems, setWishlistItems] = useState(7); // Mock wishlist count
 
   return (
@@ -109,22 +108,7 @@ export function Header({ className }: HeaderProps) {
             </Button>
 
             {/* Cart */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-9 w-9 relative"
-              aria-label="Shopping cart"
-            >
-              <ShoppingCart className="h-4 w-4" />
-              {cartItems > 0 && (
-                <Badge 
-                  variant="destructive" 
-                  className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
-                >
-                  {cartItems}
-                </Badge>
-              )}
-            </Button>
+            <CartModal />
 
             {/* Account */}
             <Button

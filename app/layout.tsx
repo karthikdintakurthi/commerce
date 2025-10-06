@@ -58,8 +58,7 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  // For now, just use undefined cart to avoid shopify import issues
-  // TODO: Implement proper cart handling without importing shopify module
+  // Initialize cart - will be created when needed
   const cart = Promise.resolve(undefined);
 
   return (

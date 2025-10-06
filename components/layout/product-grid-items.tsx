@@ -38,9 +38,9 @@ export default function ProductGridItems({ products }: { products: Product[] }) 
               })) || []}
               href={`/product/${product.handle}`}
               rating={4.5} // Default rating
-              reviewCount={Math.floor(Math.random() * 200) + 10}
+              reviewCount={127} // Default review count
               isNew={false}
-              isBestseller={Math.random() > 0.7}
+              isBestseller={false}
               isOnSale={product.priceRange.minVariantPrice.amount !== product.priceRange.maxVariantPrice.amount}
               isOutOfStock={!product.availableForSale}
             />
