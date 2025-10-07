@@ -26,27 +26,34 @@
 
 @layer base {
   :root {
-    /* Light theme - Core colors (Vanitha Fashion Jewelry branding) */
+    /* Light theme - Enhanced Vanitha Fashion Jewelry branding */
     --background: hsl(0 0% 100%);
     --foreground: hsl(0 0% 9%);
     --card: hsl(0 0% 100%);
     --card-foreground: hsl(0 0% 9%);
     --popover: hsl(0 0% 100%);
     --popover-foreground: hsl(0 0% 9%);
-    --primary: 45 100% 51%; /* Gold primary */
+    --primary: 45 100% 51%; /* Rich gold primary */
     --primary-foreground: 0 0% 100%;
-    --secondary: hsl(45 20% 85%); /* Light gold secondary */
+    --secondary: hsl(45 15% 92%); /* Warm cream secondary */
     --secondary-foreground: hsl(0 0% 9%);
-    --muted: hsl(45 10% 90%);
+    --muted: hsl(45 8% 95%);
     --muted-foreground: hsl(0 0% 45%);
     --accent: hsl(45 100% 51%); /* Gold accent */
     --accent-foreground: hsl(0 0% 100%);
     --destructive: hsl(0 84% 60%);
     --destructive-foreground: hsl(0 0% 100%);
-    --border: hsl(45 20% 85%);
-    --input: hsl(45 20% 85%);
+    --border: hsl(45 15% 88%);
+    --input: hsl(45 15% 88%);
     --ring: hsl(45 100% 51%);
     --radius: 0.5rem;
+    
+    /* Enhanced branding colors */
+    --brand-gold: 45 100% 51%;
+    --brand-gold-light: 45 30% 85%;
+    --brand-gold-dark: 45 100% 35%;
+    --brand-cream: 45 15% 95%;
+    --brand-warm: 30 20% 90%;
 
     /* Jewelry semantic colors (Vanitha Fashion Jewelry theme) */
     --chip-emerald: hsl(120 30% 25%); /* Darker emerald */

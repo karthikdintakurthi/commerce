@@ -100,6 +100,13 @@ const config: Config = {
         'chip-gold': 'var(--chip-gold)',
         'chip-sage': 'var(--chip-sage)',
         'chip-sand': 'var(--chip-sand)',
+        
+        // Enhanced branding colors
+        'brand-gold': 'hsl(var(--brand-gold))',
+        'brand-gold-light': 'hsl(var(--brand-gold-light))',
+        'brand-gold-dark': 'hsl(var(--brand-gold-dark))',
+        'brand-cream': 'hsl(var(--brand-cream))',
+        'brand-warm': 'hsl(var(--brand-warm))',
       },
       
       fontFamily: {
@@ -329,10 +336,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/container-queries'),
-    require('@tailwindcss/typography'),
-  ],
 };
 
 export default config;

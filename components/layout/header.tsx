@@ -1,9 +1,9 @@
 'use client';
 
 import CartModal from '@/components/cart/modal';
+import { VanithaLogo } from '@/components/icons/vanitha-logo';
 import { AnnouncementBar } from '@/components/layout/announcement-bar';
 import { MobileSheet } from '@/components/layout/mobile-sheet';
-import { VanithaLogo } from '@/components/icons/vanitha-logo';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -33,7 +33,7 @@ export function Header({ className }: HeaderProps) {
   const [wishlistItems, setWishlistItems] = useState(7); // Mock wishlist count
 
   return (
-    <header className={cn("sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border", className)}>
+    <header className={cn("sticky top-0 z-50 bg-gradient-to-r from-brand-cream to-background border-b border-brand-gold-light shadow-sm", className)}>
       <AnnouncementBar />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,8 +50,7 @@ export function Header({ className }: HeaderProps) {
               className="flex items-center focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md"
               aria-label="Vanitha Fashion Jewelry Home"
             >
-              <VanithaLogo variant="full" size="md" className="hidden sm:flex" />
-              <VanithaLogo variant="icon" size="md" className="sm:hidden" />
+              <VanithaLogo variant="icon" size="lg" />
             </Link>
           </div>
 
@@ -61,7 +60,7 @@ export function Header({ className }: HeaderProps) {
               <div key={category.name} className="relative group">
                 <Link
                   href={category.href}
-                  className="flex items-center space-x-1 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm"
+                  className="flex items-center space-x-1 py-2 px-3 text-sm font-medium text-foreground hover:text-brand-gold hover:bg-brand-cream transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-gold focus:ring-offset-2 rounded-md"
                 >
                   <span>{category.name}</span>
                   <ChevronDown className="h-3 w-3 opacity-50 group-hover:opacity-100 transition-opacity" />
@@ -77,7 +76,7 @@ export function Header({ className }: HeaderProps) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9"
+                className="h-9 w-9 hover:bg-brand-cream hover:text-brand-gold transition-colors"
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                 aria-label="Search"
               >
@@ -89,14 +88,14 @@ export function Header({ className }: HeaderProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 relative"
+              className="h-9 w-9 relative hover:bg-brand-cream hover:text-brand-gold transition-colors"
               aria-label="Wishlist"
             >
               <Heart className="h-4 w-4" />
               {wishlistItems > 0 && (
                 <Badge 
                   variant="destructive" 
-                  className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                  className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-brand-gold text-white"
                 >
                   {wishlistItems}
                 </Badge>
@@ -110,7 +109,7 @@ export function Header({ className }: HeaderProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 hidden sm:flex"
+              className="h-9 w-9 hidden sm:flex hover:bg-brand-cream hover:text-brand-gold transition-colors"
               aria-label="Account"
             >
               <User className="h-4 w-4" />
@@ -121,13 +120,13 @@ export function Header({ className }: HeaderProps) {
 
         {/* Search Bar (when open) */}
         {isSearchOpen && (
-          <div className="py-4 border-t border-border">
+          <div className="py-4 border-t border-brand-gold-light bg-gradient-to-r from-brand-cream/50 to-background">
             <div className="relative max-w-md mx-auto">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-brand-gold" />
               <input
                 type="search"
                 placeholder="Search for jewelry, collections, or designers..."
-                className="w-full pl-10 pr-4 py-3 border border-border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 border border-brand-gold-light rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-brand-gold focus:border-brand-gold shadow-sm"
                 autoFocus
                 onBlur={() => setIsSearchOpen(false)}
               />
